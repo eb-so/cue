@@ -1,3 +1,7 @@
+## 0.2.2
+- *FEAT* Added `TweenActor.value` constructor for simpler value-based animation with child widget support
+## 0.2.1
+- *CHORE* Update readme file
 ## 0.2.0+1
 - *FIX* Path motion auto-rotate angle direction corrected
 
