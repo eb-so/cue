@@ -20,7 +20,7 @@ void main() {
             defaultConfig: controller.timeline.defaultConfig,
             reanimateFromCurrent: false,
             child: CueDragScrubber(
-              axisDirection: AxisDirection.down,
+              scrubForwardDirection: .down,
               distance: 200,
               child: const SizedBox(width: 100, height: 100),
             ),
@@ -41,7 +41,7 @@ void main() {
         MaterialApp(
           home: CueDragScrubber(
             controller: controller,
-            axisDirection: AxisDirection.down,
+            scrubForwardDirection: .down,
             distance: 200,
             child: const SizedBox(width: 100, height: 100),
           ),
@@ -55,7 +55,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: CueDragScrubber(
-            axisDirection: AxisDirection.down,
+            scrubForwardDirection: .down,
             distance: 200,
             child: const SizedBox(width: 100, height: 100),
           ),
@@ -81,7 +81,7 @@ void main() {
             defaultConfig: controller.timeline.defaultConfig,
             reanimateFromCurrent: false,
             child: CueDragScrubber(
-              axisDirection: AxisDirection.down,
+              scrubForwardDirection: .down,
               distance: 200,
               child: const SizedBox(width: 100, height: 100),
             ),
@@ -105,7 +105,7 @@ void main() {
             defaultConfig: controller.timeline.defaultConfig,
             reanimateFromCurrent: false,
             child: CueDragScrubber(
-              axisDirection: AxisDirection.right,
+                   scrubForwardDirection: .right,
               distance: 200,
               child: const SizedBox(width: 100, height: 100),
             ),
@@ -131,7 +131,7 @@ void main() {
             child: Actor(
               acts: [.slideX(to: 1)],
               child: CueDragScrubber(
-                axisDirection: AxisDirection.down,
+                scrubForwardDirection: .down,
                 distance: 200,
                 releaseMode: CueDragReleaseMode.none,
                 child: const SizedBox(width: 100, height: 100),
@@ -162,7 +162,7 @@ void main() {
             child: Actor(
               acts: [.slideX(to: 2)],
               child: CueDragScrubber(
-                axisDirection: AxisDirection.down,
+                scrubForwardDirection: .down,
                 distance: 200,
                 releaseMode: CueDragReleaseMode.snap,
                 child: const SizedBox(width: 100, height: 100),
@@ -193,7 +193,7 @@ void main() {
             defaultConfig: controller.timeline.defaultConfig,
             reanimateFromCurrent: false,
             child: CueDragScrubber(
-              axisDirection: AxisDirection.down,
+              scrubForwardDirection: .down,
               distance: 100,
               releaseMode: CueDragReleaseMode.none,
               child: const SizedBox(width: 100, height: 100),
@@ -227,7 +227,7 @@ void main() {
             defaultConfig: controller.timeline.defaultConfig,
             reanimateFromCurrent: false,
             child: CueDragScrubber(
-              axisDirection: AxisDirection.down,
+              scrubForwardDirection: .down,
               distance: 200,
               forceLinearScrubing: false,
               releaseMode: CueDragReleaseMode.none,
@@ -257,7 +257,7 @@ void main() {
             defaultConfig: controller.timeline.defaultConfig,
             reanimateFromCurrent: false,
             child: CueDragScrubber(
-              axisDirection: AxisDirection.down,
+              scrubForwardDirection: .down,
               distance: 200,
               releaseMode: CueDragReleaseMode.fling,
               child: const SizedBox(width: 100, height: 100),
@@ -306,7 +306,7 @@ void main() {
   group('debugFillProperties', () {
     test('debugFillProperties adds expected properties', () {
       final widget = CueDragScrubber(
-        axisDirection: AxisDirection.down,
+        scrubForwardDirection: .down,
         distance: 100,
         releaseMode: CueDragReleaseMode.snap,
         forceLinearScrubing: true,
@@ -319,7 +319,7 @@ void main() {
       final props = builder.properties;
       expect(props.any((p) => p.name == 'distance'), isTrue);
       expect(props.any((p) => p.name == 'releaseMode'), isTrue);
-      expect(props.any((p) => p.name == 'axisDirection'), isTrue);
+      expect(props.any((p) => p.name == 'scrubForwardDirection'), isTrue);
       expect(props.any((p) => p.name == 'scrubDirection'), isTrue);
       expect(props.any((p) => p.name == 'forceLinearScrubing'), isTrue);
       expect(props.any((p) => p.name == 'controller'), isTrue);
@@ -330,7 +330,7 @@ void main() {
     test('asserts positive distance', () {
       expect(
         () => CueDragScrubber(
-          axisDirection: AxisDirection.down,
+          scrubForwardDirection: .down,
           distance: -100,
           child: const SizedBox(),
         ),
