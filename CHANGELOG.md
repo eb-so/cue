@@ -1,3 +1,7 @@
+## 0.3.0
+- *BREAKING* `CueDragScrubber.axisDirection` replaced with required `scrubForwardDirection` (`CueScrubAxis` enum) for explicit directional control
+- *FEAT* `CueScrubAxis.start`/`.end` resolve based on text direction (LTR/RTL); `.left`/`.right`/`.up`/`.down` for absolute physical directions
+
 ## 0.2.2
 - *FEAT* Added `TweenActor.value` constructor for simpler value-based animation with child widget support
 ## 0.2.1

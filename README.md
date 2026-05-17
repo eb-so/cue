@@ -672,15 +672,15 @@ Attach drag-based scrubbing to any subtree driven by a `Cue` controller.
 Cue(
   controller: _controller,
   child: CueDragScrubber(
-    axisDirection: AxisDirection.down,
+    scrubForwardDirection: CueScrubAxis.down,
     distance: 200,
     child: DecoratedBoxActor(...),
   ),
 )
 ```
 
-- `axisDirection` (required) controls which drag axis and direction map to progress. Use `AxisDirection.up`, `.down`, `.left`, or `.right`.
-- `distance` must be positive. To reverse the drag direction, use the opposite `AxisDirection` instead of a negative distance.
+- `scrubForwardDirection` (required) defines which drag direction maps to forward progress. Use `CueScrubAxis.start`/`.end` for logical directions that adapt to text direction (LTR/RTL), or `.left`/`.right`/`.up`/`.down` for absolute physical directions.
+- `distance` must be positive. To reverse the drag direction, use the opposite `CueScrubAxis` instead of a negative distance.
 
 ### `CueFlexibleSpaceBar`
 
