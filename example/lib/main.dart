@@ -66,7 +66,8 @@ class _BasiceExampleState extends State<BasiceExample> {
               ],
               child: CueDragScrubber(
                 distance: 100,
-                axisDirection: .up,
+                scrubForwardDirection: CueScrubAxis.up,
+                releaseMode: .reverse,
                 child: Container(
                   width: 100,
                   height: 100,

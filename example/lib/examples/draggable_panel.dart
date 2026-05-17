@@ -78,7 +78,7 @@ class _DraggablePanelState extends State<DraggablePanel> {
               to: .fromSTEB(20, _dragExtent, 20, 24),
               child: CueDragScrubber(
                 distance: _dragExtent,
-                axisDirection: .down,
+                scrubForwardDirection: .down,
                 scrubDirection: .forward,
                 child: CardActor(
                   clipBehavior: .antiAlias,

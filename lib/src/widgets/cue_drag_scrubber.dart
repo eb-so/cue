@@ -2,6 +2,49 @@ import 'package:cue/cue.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+/// Defines the forward scrubbing direction along which dragging maps to animation progress.
+///
+/// [start] and [end] are logical directions that resolve based on text direction:
+/// - LTR: [start] = left, [end] = right
+/// - RTL: [start] = right, [end] = left
+///
+/// [left], [right], [up], and [down] are absolute physical directions.
+enum CueScrubAxis {
+  /// Logical start direction (left in LTR, right in RTL).
+  start,
+
+  /// Logical end direction (right in LTR, left in RTL).
+  end,
+
+  /// Physical left direction.
+  left,
+
+  /// Physical right direction.
+  right,
+
+  /// Physical up direction.
+  up,
+
+  /// Physical down direction.
+  down
+  ;
+
+  /// Resolves the forward scrubbing direction to an [AxisDirection] based on the given text direction.
+  AxisDirection resolveScrubDirection(TextDirection textDirection) {
+    return switch (this) {
+      CueScrubAxis.start => textDirection == TextDirection.ltr ? AxisDirection.left : AxisDirection.right,
+      CueScrubAxis.end => textDirection == TextDirection.ltr ? AxisDirection.right : AxisDirection.left,
+      CueScrubAxis.left => AxisDirection.left,
+      CueScrubAxis.right => AxisDirection.right,
+      CueScrubAxis.up => AxisDirection.up,
+      CueScrubAxis.down => AxisDirection.down,
+    };
+  }
+
+  /// Whether this axis is vertical (up/down)
+  bool get isVertical => this == CueScrubAxis.up || this == CueScrubAxis.down;
+}
+
 /// Controls what happens when the user releases the drag.
 enum CueDragReleaseMode {
   /// Flings with the finger's velocity using a spring simulation.
@@ -13,6 +56,12 @@ enum CueDragReleaseMode {
 
   /// Stays wherever the drag stopped — no completion animation.
   none,
+
+  /// Always snaps to the end (progress = 1) when released, regardless of velocity or current progress.
+  forward,
+
+  /// Always snaps to the start (progress = 0) when released, regardless of velocity or current progress.
+  reverse,
 }
 
 /// Controls the direction of scrubbing when the user drags to scrub the animation.
@@ -42,6 +91,7 @@ enum CueScrubDirection {
 ///   timeline: _controller.timeline,
 ///   child: CueDragScrubber(
 ///     distance: 220,           // controller taken from CueScope
+///     scrubForwardDirection: .right,   // drag right to scrub forward, left to scrub reverse
 ///     child: DecoratedBoxActor(...),
 ///   ),
 /// )
@@ -52,14 +102,14 @@ class CueDragScrubber extends StatefulWidget {
     super.key,
     required this.child,
     required this.distance,
-    required this.axisDirection,
+    required this.scrubForwardDirection,
     this.controller,
     this.releaseMode = CueDragReleaseMode.fling,
     this.forceLinearScrubing = true,
     this.hitTestBehavior,
     this.onAnimationEnd,
     this.scrubDirection = CueScrubDirection.auto,
-  }) : assert(distance > 0, 'distance must be positive; use AxisDirection to change drag direction');
+  }) : assert(distance > 0, 'distance must be positive');
 
   /// Callback fired when the animation completes or is dismissed.
   final ValueChanged<bool>? onAnimationEnd;
@@ -78,15 +128,18 @@ class CueDragScrubber extends StatefulWidget {
 
   /// The number of logical pixels that map to a full progress travel.
   ///
-  /// Must be positive. Use [axisDirection] to change the drag direction.
+  /// Must be positive. Use [scrubForwardDirection] to change the drag direction.
   final double distance;
 
   /// Optional explicit controller. If omitted, the controller is taken from
   /// the nearest [CueScope] ancestor. Throws at runtime if neither is available.
   final CueController? controller;
 
-  /// The direction along which dragging maps to animation progress.
-  final AxisDirection axisDirection;
+  /// The forward scrubbing direction along which dragging maps to animation progress.
+  ///
+  /// Use [start]/[end] for logical directions that adapt to text direction,
+  /// or [left]/[right]/[up]/[down] for absolute physical directions.
+  final CueScrubAxis scrubForwardDirection;
 
   /// What to do when the user lifts their finger.
   final CueDragReleaseMode releaseMode;
@@ -95,7 +148,7 @@ class CueDragScrubber extends StatefulWidget {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(DoubleProperty('distance', distance));
-    properties.add(EnumProperty<AxisDirection>('axisDirection', axisDirection));
+    properties.add(EnumProperty<CueScrubAxis>('scrubForwardDirection', scrubForwardDirection));
     properties.add(
       EnumProperty<CueDragReleaseMode>('releaseMode', releaseMode, defaultValue: CueDragReleaseMode.fling),
     );
@@ -115,6 +168,7 @@ class _CueDragScrubberState extends State<CueDragScrubber> {
   double _startOffset = 0;
 
   CueController? _controller;
+  TextDirection _textDirection = TextDirection.ltr;
 
   @override
   void didChangeDependencies() {
@@ -130,6 +184,7 @@ class _CueDragScrubberState extends State<CueDragScrubber> {
         _controller!.addStatusListener(_handleAnimationStatus);
       }
     }
+    _textDirection = Directionality.of(context);
   }
 
   void _handleAnimationStatus(AnimationStatus status) {
@@ -138,14 +193,16 @@ class _CueDragScrubberState extends State<CueDragScrubber> {
     }
   }
 
-  double _primaryOffset(Offset o) => switch (widget.axisDirection) {
-    AxisDirection.up => -o.dy,
-    AxisDirection.down => o.dy,
-    AxisDirection.left => -o.dx,
-    AxisDirection.right => o.dx,
-  };
+  double _primaryOffset(Offset o) {
+    final axisDirection = widget.scrubForwardDirection.resolveScrubDirection(_textDirection);
+    return switch (axisDirection) {
+      AxisDirection.up => -o.dy,
+      AxisDirection.down => o.dy,
+      AxisDirection.left => -o.dx,
+      AxisDirection.right => o.dx,
+    };
+  }
 
-  bool _isVertical = true;
   bool _scrubForward = true;
 
   void _onDragStart(DragStartDetails d) {
@@ -178,14 +235,20 @@ class _CueDragScrubberState extends State<CueDragScrubber> {
   void _onDragEnd(DragEndDetails d) {
     assert(_controller != null);
     final controller = _controller!;
+    final velocity = (d.primaryVelocity ?? 0) / widget.distance;
     switch (widget.releaseMode) {
       case CueDragReleaseMode.none:
         break;
       case CueDragReleaseMode.snap:
         _snap(controller);
         break;
+      case CueDragReleaseMode.forward:
+        controller.forward(velocity: velocity);
+        break;
+      case CueDragReleaseMode.reverse:
+        controller.reverse(velocity: velocity);
+        break;
       case CueDragReleaseMode.fling:
-        final velocity = (d.primaryVelocity ?? 0) / widget.distance;
         if (velocity.abs() > 0.1) {
           controller.fling(velocity: velocity);
         } else {
@@ -212,15 +275,15 @@ class _CueDragScrubberState extends State<CueDragScrubber> {
 
   @override
   Widget build(BuildContext context) {
-    _isVertical = widget.axisDirection == AxisDirection.up || widget.axisDirection == AxisDirection.down;
+    final isVertical = widget.scrubForwardDirection.isVertical;
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onVerticalDragStart: _isVertical ? _onDragStart : null,
-      onVerticalDragUpdate: _isVertical ? _onDragUpdate : null,
-      onVerticalDragEnd: _isVertical ? _onDragEnd : null,
-      onHorizontalDragStart: _isVertical ? null : _onDragStart,
-      onHorizontalDragUpdate: _isVertical ? null : _onDragUpdate,
-      onHorizontalDragEnd: _isVertical ? null : _onDragEnd,
+      onVerticalDragStart: isVertical ? _onDragStart : null,
+      onVerticalDragUpdate: isVertical ? _onDragUpdate : null,
+      onVerticalDragEnd: isVertical ? _onDragEnd : null,
+      onHorizontalDragStart: isVertical ? null : _onDragStart,
+      onHorizontalDragUpdate: isVertical ? null : _onDragUpdate,
+      onHorizontalDragEnd: isVertical ? null : _onDragEnd,
       child: widget.child,
     );
   }
