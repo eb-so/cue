@@ -228,7 +228,7 @@ class TweenActor<T extends Object?> extends SingleActorBase<T> {
        _child = null,
        super(child: const SizedBox.shrink());
 
-  /// {@template actor.tween.value}
+ 
   /// Creates a custom tween animation widget with a value builder.
   ///
   /// Similar to [TweenActor], but the builder receives the current animated value
@@ -240,7 +240,7 @@ class TweenActor<T extends Object?> extends SingleActorBase<T> {
   ///
   /// The animation uses [tweenBuilder] if provided, otherwise [Lerpable.lerpTo()]
   /// for custom types or the default tween for built-ins (double, Offset, etc.).
-  /// 
+  ///
   /// ## Example usage
   //// ```dart
   /// TweenActor&lt;double&gt;.value(
@@ -253,7 +253,6 @@ class TweenActor<T extends Object?> extends SingleActorBase<T> {
   ///  ),
   /// )
   /// ```
-  /// {@endtemplate}
   const TweenActor.value({
     super.key,
     required super.from,

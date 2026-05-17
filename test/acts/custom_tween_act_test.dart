@@ -615,4 +615,168 @@ void main() {
       expect(act1.hashCode, isNot(equals(act2.hashCode)));
     });
   });
+
+  group('TweenActor.value', () {
+    testWidgets('renders with value builder', (tester) async {
+      double? capturedValue;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Cue.onMount(
+            motion: CueMotion.linear(Duration(milliseconds: 300)),
+            child: TweenActor<double>.value(
+              from: 0.0,
+              to: 100.0,
+              builder: (context, value, child) {
+                capturedValue = value;
+                return SizedBox(
+                  width: value,
+                  height: 50,
+                  child: child,
+                );
+              },
+              child: const Text('child'),
+            ),
+          ),
+        ),
+      );
+
+      await tester.pump();
+
+      expect(find.text('child'), findsOneWidget);
+      expect(capturedValue, isNotNull);
+    });
+
+    testWidgets('value builder receives animated value', (tester) async {
+      double? capturedValue;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Cue.onMount(
+            motion: CueMotion.linear(Duration(milliseconds: 1000)),
+            child: TweenActor<double>.value(
+              from: 0.0,
+              to: 100.0,
+              builder: (context, value, child) {
+                capturedValue = value;
+                return const SizedBox();
+              },
+            ),
+          ),
+        ),
+      );
+
+      await tester.pump();
+      expect(capturedValue, equals(0.0));
+
+      await tester.pump(const Duration(milliseconds: 500));
+      expect(capturedValue, greaterThan(0.0));
+      expect(capturedValue, lessThan(100.0));
+
+      await tester.pump(const Duration(milliseconds: 500));
+      expect(capturedValue, closeTo(100.0, 0.01));
+    });
+
+    test('constructor accepts motion', () {
+      final motion = CueMotion.linear(300.ms);
+      final actor = TweenActor<double>.value(
+        from: 0.0,
+        to: 100.0,
+        motion: motion,
+        builder: (context, value, child) => const SizedBox(),
+      );
+      expect(actor.motion, equals(motion));
+    });
+
+    test('constructor accepts delay', () {
+      const delay = Duration(milliseconds: 150);
+      final actor = TweenActor<double>.value(
+        from: 0.0,
+        to: 100.0,
+        delay: delay,
+        builder: (context, value, child) => const SizedBox(),
+      );
+      expect(actor.delay, equals(delay));
+    });
+
+    test('constructor accepts reverse', () {
+      const reverse = ReverseBehavior<double>.mirror();
+      final actor = TweenActor<double>.value(
+        from: 0.0,
+        to: 100.0,
+        reverse: reverse,
+        builder: (context, value, child) => const SizedBox(),
+      );
+      expect(actor.reverse, equals(reverse));
+    });
+
+    test('constructor accepts child', () {
+      final actor = TweenActor<double>.value(
+        from: 0.0,
+        to: 100.0,
+        builder: (context, value, child) => const SizedBox(),
+        child: const Text('child'),
+      );
+      expect(actor.child, isA<Text>());
+      expect((actor.child as Text).data, equals('child'));
+    });
+
+    test('constructor accepts tweenBuilder', () {
+      final tween = Tween<double>(begin: 0.0, end: 100.0);
+      final actor = TweenActor<double>.value(
+        from: 0.0,
+        to: 100.0,
+        builder: (context, value, child) => const SizedBox(),
+        tweenBuilder: tween,
+      );
+      expect(actor.tweenBuilder, equals(tween));
+    });
+
+    test('act returns CustomTweenAct with correct key', () {
+      final actor = TweenActor<double>.value(
+        from: 0.0,
+        to: 100.0,
+        builder: (context, value, child) => const SizedBox(),
+      );
+      expect(actor.act, isA<CustomTweenAct<double>>());
+      expect(actor.act.key, equals(const ActKey('TweenActor')));
+    });
+
+    test('act from value has correct from and to', () {
+      final actor = TweenActor<double>.value(
+        from: 50.0,
+        to: 150.0,
+        builder: (context, value, child) => const SizedBox(),
+      );
+      expect(actor.from, equals(50.0));
+      expect(actor.to, equals(150.0));
+    });
+
+    testWidgets('value builder receives child widget', (tester) async {
+      Widget? capturedChild;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Cue.onMount(
+            motion: CueMotion.linear(Duration(milliseconds: 300)),
+            child: TweenActor<double>.value(
+              from: 0.0,
+              to: 100.0,
+              builder: (context, value, child) {
+                capturedChild = child;
+                return SizedBox(child: child);
+              },
+              child: const FlutterLogo(size: 24),
+            ),
+          ),
+        ),
+      );
+
+      await tester.pumpAndSettle();
+
+      expect(capturedChild, isNotNull);
+      expect(capturedChild, isA<FlutterLogo>());
+      expect(find.byType(FlutterLogo), findsOneWidget);
+    });
+  });
 }
