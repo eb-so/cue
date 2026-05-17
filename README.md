@@ -200,6 +200,8 @@ Direction matters here:
 - `Cue.indexed` is driven by an indexed controller. Items ahead of the active offset move forward, while items behind it move in reverse as the controller moves between indices.
 - `Cue(...)` gives you full imperative control. You decide the direction by calling methods such as `forward`, `reverse`, `animateTo`, or by setting progress directly on your controller.
 
+In sliver layouts (for example `CustomScrollView`), animate the non-sliver widget you render inside each sliver (such as a `SliverToBoxAdapter` child or `SliverList` item). For `SliverAppBar` headers, use `CueFlexibleSpaceBar`.
+
 Example:
 
 ```dart
