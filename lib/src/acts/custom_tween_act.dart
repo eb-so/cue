@@ -3,6 +3,12 @@ import 'dart:ui';
 import 'package:cue/cue.dart';
 import 'package:flutter/material.dart';
 
+/// Custom tween act and widget for animating arbitrary types with a builder.
+typedef TweenActorBuilder<T> = Widget Function(BuildContext context, CueAnimation<T> animation);
+
+/// A custom tween act that animates values of type `T` using a builder function.
+typedef TweenActorValueBuilder<T> = Widget Function(BuildContext context, T value, Widget? child);
+
 /// Animates custom tween values using a builder function.
 ///
 /// Allows you to define arbitrary animation values and render them using a
@@ -129,7 +135,9 @@ class CustomTweenAct<T extends Object?> extends TweenAct<T> {
 /// in [Actor] for better readability.
 class TweenActor<T extends Object?> extends SingleActorBase<T> {
   /// The widget builder function that receives the animated value.
-  final Widget Function(BuildContext context, CueAnimation<T> animation) builder;
+  final TweenActorBuilder<T>? _builder;
+  final TweenActorValueBuilder<T>? _valueBuilder;
+  final Widget? _child;
 
   /// Optional custom tween builder for types without [Lerpable] support.
   final Animatable<T>? tweenBuilder;
@@ -213,9 +221,53 @@ class TweenActor<T extends Object?> extends SingleActorBase<T> {
     super.motion,
     super.delay,
     super.reverse,
-    required this.builder,
+    required TweenActorBuilder<T> builder,
     this.tweenBuilder,
-  }) : super(child: const SizedBox.shrink());
+  }) : _builder = builder,
+       _valueBuilder = null,
+       _child = null,
+       super(child: const SizedBox.shrink());
+
+  /// {@template actor.tween.value}
+  /// Creates a custom tween animation widget with a value builder.
+  ///
+  /// Similar to [TweenActor], but the builder receives the current animated value
+  /// directly instead of the full animation. This is useful for simple cases where
+  /// you only need the value and don't require animation status or progress.
+  ///
+  /// [builder] receives the current animated value and an optional child widget.
+  /// [from] and [to] define the start and end values. Both are required.
+  ///
+  /// The animation uses [tweenBuilder] if provided, otherwise [Lerpable.lerpTo()]
+  /// for custom types or the default tween for built-ins (double, Offset, etc.).
+  /// 
+  /// ## Example usage
+  //// ```dart
+  /// TweenActor&lt;double&gt;.value(
+  ///   from: 0,
+  ///   to: 100,
+  ///   builder: (context, value, child) => Container(
+  ///     width: value,
+  ///     height: 50,
+  ///     color: Colors.blue,
+  ///  ),
+  /// )
+  /// ```
+  /// {@endtemplate}
+  const TweenActor.value({
+    super.key,
+    required super.from,
+    required super.to,
+    super.motion,
+    super.delay,
+    super.reverse,
+    required TweenActorValueBuilder<T> builder,
+    Widget? child,
+    this.tweenBuilder,
+  }) : _builder = null,
+       _valueBuilder = builder,
+       _child = child,
+       super(child: child ?? const SizedBox.shrink());
 
   /// {@template actor.tween.keyframed}
   /// Creates a multi-frame custom tween animation.
@@ -261,8 +313,11 @@ class TweenActor<T extends Object?> extends SingleActorBase<T> {
     super.reverse,
     super.delay,
     this.tweenBuilder,
-    required this.builder,
-  }) : super.keyframes(child: const SizedBox.shrink());
+    required TweenActorBuilder<T> builder,
+  }) : _builder = builder,
+       _valueBuilder = null,
+       _child = null,
+       super.keyframes(child: const SizedBox.shrink());
 
   @override
   Act get act => CustomTweenAct<T>(
@@ -272,7 +327,17 @@ class TweenActor<T extends Object?> extends SingleActorBase<T> {
     motion: motion,
     delay: delay,
     reverse: reverse,
-    builder: builder,
+    builder: (context, animation) {
+      if (_builder != null) {
+        return _builder(context, animation);
+      }
+      assert(_valueBuilder != null, 'Either builder or valueBuilder must be provided');
+      return AnimatedBuilder(
+        animation: animation,
+        builder: (context, child) => _valueBuilder!(context, animation.value, child),
+        child: _child,
+      );
+    },
     tweenBuilder: tweenBuilder,
   );
 }

@@ -1,3 +1,4 @@
+
 import 'package:cue/cue.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ class CueApp extends StatelessWidget {
           seedColor: const Color(0xFF6C63FF),
         ),
       ).copyWith(splashFactory: InkSparkle.splashFactory),
-      themeMode: ThemeMode.system,
+      themeMode: ThemeMode.light,
       home: BasiceExample(),
       showPerformanceOverlay: false,
       debugShowCheckedModeBanner: false,
