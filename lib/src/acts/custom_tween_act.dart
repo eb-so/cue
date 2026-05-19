@@ -228,7 +228,6 @@ class TweenActor<T extends Object?> extends SingleActorBase<T> {
        _child = null,
        super(child: const SizedBox.shrink());
 
- 
   /// Creates a custom tween animation widget with a value builder.
   ///
   /// Similar to [TweenActor], but the builder receives the current animated value

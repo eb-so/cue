@@ -251,6 +251,9 @@ class Position {
   /// Creates a position from STEB values (start, top, end, bottom).
   const Position.fromSTEB(this.start, this.top, this.end, this.bottom) : width = null, height = null;
 
+  /// Creates a position from STWH values (start, top, width, height).
+  const Position.fromSTWH(this.start, this.top, this.width, this.height) : end = null, bottom = null;
+
   /// {@template position.top_start}
   /// Positions from the top-start corner.
   ///
@@ -319,7 +322,8 @@ class Position {
 
   static double? _lerpNullable(double? a, double? b, double t) {
     if (a == null && b == null) return null;
-    return (a ?? 0) + ((b ?? 0) - (a ?? 0)) * t;
+    if (a == null || b == null) return t < 0.5 ? a : b;
+    return a + (b - a) * t;
   }
 }
 

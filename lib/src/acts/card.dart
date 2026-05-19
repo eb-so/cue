@@ -238,7 +238,7 @@ class CardAct extends AnimtableAct<CardProps, CardProps> {
           (props.borderRadius != null
               ? RoundedRectangleBorder(borderRadius: props.borderRadius!)
               : const RoundedRectangleBorder());
-      final hasBorderStroke = !resolvedShape.preferPaintInterior;
+      final hasBorderStroke = resolvedShape is OutlinedBorder && resolvedShape.side.style != BorderStyle.none;
       return (
         clipper: ShapeBorderClipper(shape: resolvedShape, textDirection: textDirection),
         painter: hasBorderStroke ? _ShapeBorderPainter(resolvedShape, textDirection) : null,
@@ -260,26 +260,27 @@ class CardAct extends AnimtableAct<CardProps, CardProps> {
           final props = animation.value;
           final (:clipper, :painter, :hasBorderStroke) = cached ?? resolveShape(props);
           final effectiveElevation = props.elevation ?? cardTheme.elevation ?? 1.0;
+          final physicalShape = PhysicalShape(
+            clipper: clipper,
+            elevation: effectiveElevation,
+            color: ElevationOverlay.applySurfaceTint(
+              props.color ?? cardTheme.color ?? const Color(0xFFFFFFFF),
+              props.surfaceTintColor ?? cardTheme.surfaceTintColor,
+              effectiveElevation,
+            ),
+            shadowColor: props.shadowColor ?? cardTheme.shadowColor ?? const Color(0xFF000000),
+            clipBehavior: clipBehavior,
+            child: child!,
+          );
           return Padding(
             padding: props.margin ?? cardTheme.margin ?? EdgeInsets.zero,
-            child: PhysicalShape(
-              clipper: clipper,
-              elevation: effectiveElevation,
-              color: ElevationOverlay.applySurfaceTint(
-                props.color ?? cardTheme.color ?? const Color(0xFFFFFFFF),
-                props.surfaceTintColor ?? cardTheme.surfaceTintColor,
-                effectiveElevation,
-              ),
-              shadowColor: props.shadowColor ?? cardTheme.shadowColor ?? const Color(0xFF000000),
-              clipBehavior: clipBehavior,
-              child: hasBorderStroke
-                  ? CustomPaint(
-                      foregroundPainter: borderOnForeground ? painter : null,
-                      painter: borderOnForeground ? null : painter,
-                      child: child,
-                    )
-                  : child!,
-            ),
+            child: hasBorderStroke
+                ? CustomPaint(
+                    foregroundPainter: borderOnForeground ? painter : null,
+                    painter: borderOnForeground ? null : painter,
+                    child: physicalShape,
+                  )
+                : physicalShape,
           );
         },
       ),
@@ -291,6 +292,7 @@ class CardAct extends AnimtableAct<CardProps, CardProps> {
     if (identical(this, other)) return true;
     if (other.runtimeType != runtimeType) return false;
     return other is CardAct &&
+        super == other &&
         other.color == color &&
         other.shadowColor == shadowColor &&
         other.surfaceTintColor == surfaceTintColor &&
@@ -306,6 +308,7 @@ class CardAct extends AnimtableAct<CardProps, CardProps> {
 
   @override
   int get hashCode => Object.hash(
+    super.hashCode,
     color,
     shadowColor,
     surfaceTintColor,

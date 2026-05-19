@@ -1,3 +1,10 @@
+## 0.3.1
+- *FEAT* Added `Position.fromSTWH` constructor for start/top/width/height positioning
+- *FIX* `Position._lerpNullable` now properly handles null interpolation (switches at t=0.5 instead of treating null as 0)
+- *FIX* `CardAct` border stroke detection now correctly checks `OutlinedBorder.side.style` instead of `preferPaintInterior`
+- *FIX* `CueController.driveByFling` now self-cleans stale listeners when animation is driven by other means
+- *FIX* Added `super == other` and `super.hashCode` to `CardAct` equality checks
+
 ## 0.3.0
 - *BREAKING* `CueDragScrubber.axisDirection` replaced with required `scrubForwardDirection` (`CueScrubAxis` enum) for explicit directional control
 - *FEAT* `CueScrubAxis.start`/`.end` resolve based on text direction (LTR/RTL); `.left`/`.right`/`.up`/`.down` for absolute physical directions

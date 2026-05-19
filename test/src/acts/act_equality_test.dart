@@ -1197,17 +1197,6 @@ void main() {
       expect(a, isNot(equals(b)));
     });
 
-    test('different motion are equal (motion not in equality)', () {
-      const a = CardAct(motion: CueMotion.none);
-      const b = CardAct(motion: CueMotion.linear(Duration(milliseconds: 100)));
-      expect(a, equals(b));
-    });
-
-    test('different delay are equal (delay not in equality)', () {
-      const a = CardAct(delay: Duration.zero);
-      const b = CardAct(delay: Duration(milliseconds: 100));
-      expect(a, equals(b));
-    });
   });
 
   group('ParallaxAct equality', () {

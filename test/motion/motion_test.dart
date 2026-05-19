@@ -284,6 +284,54 @@ void main() {
       );
       expect(motion.baseDuration, equals(Duration(milliseconds: 100)));
     });
+
+    test('CueMotion.none with delay respects the delay duration', () {
+      const motion = DelayedMotion(
+        CueMotion.none,
+        Duration(milliseconds: 200),
+      );
+      expect(motion.baseDuration, equals(Duration(milliseconds: 200)));
+
+      final sim = motion.build(SimulationBuildData.forward(startValue: 0.0));
+      expect(sim.duration, equals(0.2));
+
+      final (value, _) = sim.valueAtProgress(0.0);
+      expect(value, equals(0.0));
+
+      final (midValue, _) = sim.valueAtProgress(0.5);
+      expect(midValue, equals(0.0));
+
+      final (endValue, _) = sim.valueAtProgress(1.0);
+      expect(endValue, equals(1.0));
+    });
+
+    test('CueMotion.none with delay x() returns start value during delay', () {
+      const motion = DelayedMotion(
+        CueMotion.none,
+        Duration(milliseconds: 100),
+      );
+      final sim = motion.build(SimulationBuildData.forward(startValue: 0.0, endValue: 1.0));
+
+      expect(sim.x(0.0), equals(0.0));
+      expect(sim.x(0.05), equals(0.0));
+      expect(sim.x(0.099), equals(0.0));
+      expect(sim.x(0.1), equals(1.0));
+      expect(sim.x(0.15), equals(1.0));
+    });
+
+    test('CueMotion.none with delay isDone respects the delay', () {
+      const motion = DelayedMotion(
+        CueMotion.none,
+        Duration(milliseconds: 100),
+      );
+      final sim = motion.build(SimulationBuildData.forward( endValue: 1.0));
+
+      expect(sim.isDone(0.0), isFalse);
+      expect(sim.isDone(0.05), isFalse);
+      expect(sim.isDone(0.099), isFalse);
+      expect(sim.isDone(0.1), isTrue);
+      expect(sim.isDone(0.2), isTrue);
+    });
   });
 
   group('DelayedMotion build with startProgress', () {

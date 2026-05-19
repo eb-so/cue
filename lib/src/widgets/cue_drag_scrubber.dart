@@ -26,8 +26,7 @@ enum CueScrubAxis {
   up,
 
   /// Physical down direction.
-  down
-  ;
+  down;
 
   /// Resolves the forward scrubbing direction to an [AxisDirection] based on the given text direction.
   AxisDirection resolveScrubDirection(TextDirection textDirection) {
@@ -223,8 +222,7 @@ class _CueDragScrubberState extends State<CueDragScrubber> {
     assert(_controller != null);
     final controller = _controller!;
     final delta = _primaryOffset(d.localPosition) - _startOffset;
-    final sign = _scrubForward ? 1.0 : -1.0;
-    final progress = (_startProgress + sign * delta / widget.distance).clamp(0.0, 1.0);
+    final progress = (_startProgress + 1.0 * delta / widget.distance).clamp(0.0, 1.0);
     controller.setProgress(
       progress,
       forward: _scrubForward,

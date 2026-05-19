@@ -330,6 +330,7 @@ class CueController extends AnimationController {
     if (from != null) {
       assert(from >= 0.0 && from <= 1.0, 'The "from" value must be between 0.0 and 1.0. Received: $from');
     }
+    _allowDriveByFling = false;
     _timeline.prepare(forward: true, from: from, velocity: velocity);
     return super.animateWith(_timeline);
   }
@@ -344,6 +345,7 @@ class CueController extends AnimationController {
     if (from != null) {
       assert(from >= 0.0 && from <= 1.0, 'The "from" value must be between 0.0 and 1.0. Received: $from');
     }
+    _allowDriveByFling = false;
     _timeline.prepare(forward: false, from: from, velocity: velocity);
     return super.animateBackWith(_timeline);
   }
@@ -389,6 +391,7 @@ class CueController extends AnimationController {
     assert(max == null || (max >= 0.0 && max <= 1.0), 'The "max" value must be between 0.0 and 1.0. Received: $max');
 
     assert(count == null || count > 0, 'The "count" value must be greater than 0. Received: $count');
+    _allowDriveByFling = false;
     _timeline.willAnimate(forward: true);
     _timeline.prepareForRepeat(RepeatConfig(reverse: reverse, count: count, from: min, target: max));
     return super.animateWith(_timeline);
@@ -426,6 +429,8 @@ class CueController extends AnimationController {
     }
   }
 
+  bool _allowDriveByFling = false;
+
   /// Drives the animation with a raw Flutter spring fling.
   ///
   /// This is a standard Flutter fling (not related to Cue's motion system or
@@ -440,6 +445,7 @@ class CueController extends AnimationController {
     SpringDescription? springDescription,
     AnimationBehavior? animationBehavior,
   }) {
+    _allowDriveByFling = true;
     springDescription ??= SpringDescription.withDampingRatio(
       mass: 1.0,
       stiffness: 500.0,
@@ -461,12 +467,27 @@ class CueController extends AnimationController {
       'Consider specifying a different springDescription, or use animateWith() '
       'with an explicit SpringSimulation if an underdamped spring is intentional.',
     );
-    void listener() => timeline.setProgress(super.value.clamp(0, 1), forward: forward);
+    void listener() {
+      if (_allowDriveByFling) {
+        timeline.setProgress(super.value.clamp(0, 1), forward: forward);
+      } else {
+        // self clean stale listener when animation is driven by other means
+        removeListener(listener);
+      }
+    }
+
+    removeListener(listener);
     addListener(listener);
     if (forward) {
-      return super.animateWith(simulation)..whenComplete(() => removeListener(listener));
+      return super.animateWith(simulation)..whenComplete(() {
+        _allowDriveByFling = false;
+        removeListener(listener);
+      });
     } else {
-      return super.animateBackWith(simulation)..whenComplete(() => removeListener(listener));
+      return super.animateBackWith(simulation)..whenComplete(() {
+        _allowDriveByFling = false;
+        removeListener(listener);
+      });
     }
   }
 }

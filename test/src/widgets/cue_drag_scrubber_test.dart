@@ -105,7 +105,7 @@ void main() {
             defaultConfig: controller.timeline.defaultConfig,
             reanimateFromCurrent: false,
             child: CueDragScrubber(
-                   scrubForwardDirection: .right,
+              scrubForwardDirection: .right,
               distance: 200,
               child: const SizedBox(width: 100, height: 100),
             ),

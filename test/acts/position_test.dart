@@ -276,12 +276,15 @@ void main() {
         expect(result.width, 75);
       });
 
-      test('lerp handles null values', () {
+      test('lerp handles null values, it switches in the middle', () {
         const a = Position(top: 0);
         const b = Position(start: 100);
-        final result = Position.lerp(a, b, 0.5);
+        final result = Position.lerp(a, b, 0.4);
         expect(result.top, 0);
-        expect(result.start, 50);
+        expect(result.start, null);
+          final result2 = Position.lerp(a, b, 0.6);
+        expect(result2.top, null);
+        expect(result2.start, 100);
       });
 
       test('lerp both null returns null', () {

@@ -393,8 +393,7 @@ enum ReverseBehaviorType {
   /// Forward animates to `to`, reverse animates to a custom target
   /// value or keyframes sequence.
   /// Can specify separate motion/delay for reverse.
-  to
-  ;
+  to;
 
   /// Whether this type requires a separate reverse animatable.
   bool get needsReverseTween => this == ReverseBehaviorType.to;

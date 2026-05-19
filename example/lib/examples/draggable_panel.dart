@@ -25,7 +25,7 @@ class _DraggablePanelState extends State<DraggablePanel> {
       motion: .easeInOut(400.ms),
       child: CardTheme(
         data: theme.cardTheme.copyWith(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+          shape: RoundedRectangleBorder(borderRadius: .circular(24)),
           color: theme.colorScheme.surfaceContainerHigh,
         ),
         child: Stack(
@@ -79,7 +79,6 @@ class _DraggablePanelState extends State<DraggablePanel> {
               child: CueDragScrubber(
                 distance: _dragExtent,
                 scrubForwardDirection: .down,
-                scrubDirection: .forward,
                 child: CardActor(
                   clipBehavior: .antiAlias,
                   elevation: .fixed(.3),
