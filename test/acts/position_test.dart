@@ -282,7 +282,7 @@ void main() {
         final result = Position.lerp(a, b, 0.4);
         expect(result.top, 0);
         expect(result.start, null);
-          final result2 = Position.lerp(a, b, 0.6);
+        final result2 = Position.lerp(a, b, 0.6);
         expect(result2.top, null);
         expect(result2.start, 100);
       });

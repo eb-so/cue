@@ -522,9 +522,11 @@ void main() {
 
     testWidgets('apply with hasBorderStroke and borderOnForeground false uses painter', (tester) async {
       const act = CardAct(
-        shape: AnimatableValue.fixed(BeveledRectangleBorder(
-           side: BorderSide(color: Colors.red, width: 2),
-        )),
+        shape: AnimatableValue.fixed(
+          BeveledRectangleBorder(
+            side: BorderSide(color: Colors.red, width: 2),
+          ),
+        ),
         borderOnForeground: false,
       );
 

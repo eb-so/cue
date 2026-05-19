@@ -1196,7 +1196,6 @@ void main() {
       const b = CardAct(semanticContainer: false);
       expect(a, isNot(equals(b)));
     });
-
   });
 
   group('ParallaxAct equality', () {

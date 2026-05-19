@@ -324,7 +324,7 @@ void main() {
         CueMotion.none,
         Duration(milliseconds: 100),
       );
-      final sim = motion.build(SimulationBuildData.forward( endValue: 1.0));
+      final sim = motion.build(SimulationBuildData.forward(endValue: 1.0));
 
       expect(sim.isDone(0.0), isFalse);
       expect(sim.isDone(0.05), isFalse);

@@ -4,6 +4,7 @@
 - *FIX* `CardAct` border stroke detection now correctly checks `OutlinedBorder.side.style` instead of `preferPaintInterior`
 - *FIX* `CueController.driveByFling` now self-cleans stale listeners when animation is driven by other means
 - *FIX* Added `super == other` and `super.hashCode` to `CardAct` equality checks
+- *FIX* `DelayedSimulation` now properly handles edge cases: delay >= duration, `x()` returns start value during delay, and `isDone` boundary condition corrected
 
 ## 0.3.0
 - *BREAKING* `CueDragScrubber.axisDirection` replaced with required `scrubForwardDirection` (`CueScrubAxis` enum) for explicit directional control

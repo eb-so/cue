@@ -101,15 +101,26 @@ class DelayedSimulation extends Simulation with CueSimulation {
     final totalDuration = duration;
     final delayProgress = totalDuration <= 0 ? 0.0 : _delay / totalDuration;
 
-    final localProgress = progress <= delayProgress
-        ? 0.0
-        : ((progress - delayProgress) / (1.0 - delayProgress)).clamp(0.0, 1.0);
+    if (delayProgress >= 1.0) {
+      return progress < 1.0
+          ? _base.valueAtProgress(0.0, forceLinear: true)
+          : _base.valueAtProgress(1.0, forceLinear: forceLinear);
+    }
+
+    if (progress < delayProgress) {
+      return _base.valueAtProgress(0.0, forceLinear: true);
+    }
+
+    final localProgress = ((progress - delayProgress) / (1.0 - delayProgress)).clamp(0.0, 1.0);
 
     return _base.valueAtProgress(localProgress, forceLinear: forceLinear);
   }
 
   @override
   double x(double t) {
+    if (t < _delay) {
+      return _base.valueAtProgress(0.0, forceLinear: true).$1;
+    }
     final tAfterDelay = (t - _delay).clamp(0.0, double.infinity);
     return _base.x(tAfterDelay);
   }
@@ -118,7 +129,7 @@ class DelayedSimulation extends Simulation with CueSimulation {
   double dx(double t) => t <= _delay ? 0.0 : _base.dx(t - _delay);
 
   @override
-  bool isDone(double t) => t > _delay && _base.isDone(t - _delay);
+  bool isDone(double t) => t >= _delay && _base.isDone(t - _delay);
 }
 
 /// A timed animation simulation driven by an easing curve.
