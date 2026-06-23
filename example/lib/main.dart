@@ -57,17 +57,17 @@ class _BasiceExampleState extends State<BasiceExample> {
           children: [
             Cue.onToggle(
               toggled: _forward,
-              motion: .wobbly(),
+              motion: CueMotion.wobbly(),
               acts: [
-                .scale(to: 1.2),
-                .slideY(to: -1),
-                .rotate(to: 180),
-                .colorTint(from: Colors.orange, to: Colors.green),
+                Act.scale(to: 1.2),
+                Act.slideY(to: -1),
+                Act.rotate(to: 180),
+                Act.colorTint(from: Colors.orange, to: Colors.green),
               ],
               child: CueDragScrubber(
                 distance: 100,
-                scrubForwardDirection: .up,
-                releaseMode: .reverse,
+                scrubForwardDirection: CueScrubAxis.up,
+                releaseMode: CueDragReleaseMode.reverse,
                 child: Container(
                   width: 100,
                   height: 100,

@@ -93,7 +93,7 @@ class IndexedCue extends Cue {
 }
 
 class _IndexedCueState extends CueState<IndexedCue> with SingleTickerProviderStateMixin {
-  late final _controller = CueController(vsync: this, motion: const .linear(Duration(milliseconds: 500)));
+  late final _controller = CueController(vsync: this, motion: const CueMotion.linear(Duration(milliseconds: 500)));
 
   @override
   String get debugName => 'IndexedCue';

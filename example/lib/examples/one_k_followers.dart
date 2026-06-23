@@ -11,7 +11,7 @@ class OneKFollowers extends StatefulWidget {
 }
 
 class _OneKFollowersState extends State<OneKFollowers> with SingleTickerProviderStateMixin {
-  late final _offset = CueValueAnimator<Offset>(.zero, vsync: this, motion: .wobbly());
+  late final _offset = CueValueAnimator<Offset>(Offset.zero, vsync: this, motion: CueMotion.wobbly());
   bool _follow = false;
   final oKey = GlobalKey();
   bool _showNumber = false;
@@ -48,8 +48,8 @@ class _OneKFollowersState extends State<OneKFollowers> with SingleTickerProvider
         },
         child: Cue.onToggle(
           toggled: _follow,
-          motion: .linear(150.ms),
-          reverseMotion: .linear(300.ms),
+          motion: CueMotion.linear(150.ms),
+          reverseMotion: CueMotion.linear(300.ms),
           child: TweenActor.value(
             from: 16.0,
             to: 60.0,
@@ -59,7 +59,7 @@ class _OneKFollowersState extends State<OneKFollowers> with SingleTickerProvider
                 gooiness: value,
                 child: Center(
                   child: GooeyBlob(
-                    shape: .rounded(24),
+                    shape: BlobShape.rounded(24),
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.transparent,

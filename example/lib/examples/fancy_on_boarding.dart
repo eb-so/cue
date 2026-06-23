@@ -65,28 +65,28 @@ class _FancyOnBoardingState extends State<FancyOnBoarding> {
               child: SafeArea(
                 bottom: false,
                 child: Align(
-                  alignment: .bottomCenter,
+                  alignment: Alignment.bottomCenter,
                   child: Padding(
-                    padding: const .only(top: 16),
+                    padding: const EdgeInsets.only(top: 16),
                     child: Cue.onProgress(
                       listenable: _pageController,
                       progress: () => _pageController.globalOffset,
                       max: 3,
                       acts: [
                         SlideAct.keyframed(
-                          frames: .fractional([
-                            .key(const Offset(0, .25), at: 0.0),
-                            .key(const Offset(-.25, .35), at: 0.33),
-                            .key(const Offset(0, -.25), at: 0.66),
-                            .key(const Offset(0, 0), at: 1.0),
+                          frames: Keyframes.fractional([
+                            FKeyframe.key(const Offset(0, .25), at: 0.0),
+                            FKeyframe.key(const Offset(-.25, .35), at: 0.33),
+                            FKeyframe.key(const Offset(0, -.25), at: 0.66),
+                            FKeyframe.key(const Offset(0, 0), at: 1.0),
                           ]),
                         ),
                         ScaleAct.keyframed(
-                          frames: .fractional([
-                            .key(1.3, at: 0.0),
-                            .key(1.5, at: 0.33),
-                            .key(1.4, at: 0.66),
-                            .key(0.85, at: 1.0),
+                          frames: Keyframes.fractional([
+                            FKeyframe.key(1.3, at: 0.0),
+                            FKeyframe.key(1.5, at: 0.33),
+                            FKeyframe.key(1.4, at: 0.66),
+                            FKeyframe.key(0.85, at: 1.0),
                           ]),
                         ),
                       ],
@@ -109,7 +109,7 @@ class _FancyOnBoardingState extends State<FancyOnBoarding> {
               child: Cue.indexed(
                 index: 3,
                 controller: _pageController,
-                acts: [.slideY(to: -.25)],
+                acts: [Act.slideY(to: -.25)],
                 child: Column(
                   children: [
                     Expanded(
@@ -149,9 +149,9 @@ class _FancyOnBoardingState extends State<FancyOnBoarding> {
                       ),
                     ),
                     Padding(
-                      padding: const .fromLTRB(28, 12, 28, 24),
+                      padding: const EdgeInsets.fromLTRB(28, 12, 28, 24),
                       child: Row(
-                        mainAxisAlignment: .center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: List.generate(
                           pageInfo.length,
                           (index) => AnimatedContainer(
@@ -168,11 +168,11 @@ class _FancyOnBoardingState extends State<FancyOnBoarding> {
                       ),
                     ),
                     Actor(
-                      acts: [.fadeIn(), .slideUp()],
+                      acts: [Act.fadeIn(), Act.slideUp()],
                       child: OutlinedButton.icon(
                         onPressed: () {},
                         label: Text("Let's Go"),
-                        iconAlignment: .end,
+                        iconAlignment: IconAlignment.end,
                         style: OutlinedButton.styleFrom(
                           foregroundColor: colors.primary,
                           side: BorderSide(color: colors.primary),

@@ -811,7 +811,7 @@ void main() {
 
       test('delayed motion with zero delay behaves like base motion', () {
         final baseMotion = CueMotion.linear(300.ms);
-        final delayedMotion = baseMotion.delayed(.zero);
+        final delayedMotion = baseMotion.delayed(Duration.zero);
 
         final baseConfig = TrackConfig(motion: baseMotion, reverseMotion: baseMotion);
         final baseTrack = CueTrackImpl(baseConfig);

@@ -16,7 +16,7 @@ class WalletPage extends StatelessWidget {
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
           child: Cue.onMount(
-            motion: .bouncy(),
+            motion: CueMotion.bouncy(),
             child: const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -45,7 +45,7 @@ class _WalletHeader extends StatelessWidget {
     return Row(
       children: [
         Actor(
-          acts: [.slideX(from: -0.5), .fadeIn()],
+          acts: [Act.slideX(from: -0.5), Act.fadeIn()],
           child: Text(
             'Wallet',
             style: theme.textTheme.headlineMedium?.copyWith(
@@ -56,7 +56,7 @@ class _WalletHeader extends StatelessWidget {
         ),
         const Spacer(),
         Actor(
-          acts: [.slideX(from: 0.5), .fadeIn()],
+          acts: [Act.slideX(from: 0.5), Act.fadeIn()],
           child: Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
@@ -81,7 +81,7 @@ class _CreditCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Actor(
-      acts: [.scale(from: 0.8), .fadeIn(), .slideY(from: 0.3)],
+      acts: [Act.scale(from: 0.8), Act.fadeIn(), Act.slideY(from: 0.3)],
       delay: 100.ms,
       child: Container(
         height: 200,
@@ -111,7 +111,7 @@ class _CreditCard extends StatelessWidget {
             Row(
               children: [
                 Actor(
-                  acts: [.fadeIn(), .blur(from: 8)],
+                  acts: [Act.fadeIn(), Act.blur(from: 8)],
                   delay: 200.ms,
                   child: Text(
                     'Current Balance',
@@ -122,7 +122,7 @@ class _CreditCard extends StatelessWidget {
                 ),
                 const Spacer(),
                 Actor(
-                  acts: [.fadeIn(), .blur(from: 8)],
+                  acts: [Act.fadeIn(), Act.blur(from: 8)],
                   delay: 250.ms,
                   child: const Icon(
                     Iconsax.wifi,
@@ -134,7 +134,7 @@ class _CreditCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Actor(
-              acts: [.fadeIn(), .blur(from: 8)],
+              acts: [Act.fadeIn(), Act.blur(from: 8)],
               delay: 300.ms,
               child: TweenAnimationBuilder<double>(
                 tween: Tween(begin: 0, end: 12842.50),
@@ -155,7 +155,7 @@ class _CreditCard extends StatelessWidget {
             Row(
               children: [
                 Actor(
-                  acts: [.fadeIn(), .slideX(from: -0.3)],
+                  acts: [Act.fadeIn(), Act.slideX(from: -0.3)],
                   delay: 400.ms,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -180,7 +180,7 @@ class _CreditCard extends StatelessWidget {
                 ),
                 const Spacer(),
                 Actor(
-                  acts: [.fadeIn(), .slideX(from: 0.3)],
+                  acts: [Act.fadeIn(), Act.slideX(from: 0.3)],
                   delay: 450.ms,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -205,7 +205,7 @@ class _CreditCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 16),
                 Actor(
-                  acts: [.fadeIn(), .scale(from: 0.5)],
+                  acts: [Act.fadeIn(), Act.scale(from: 0.5)],
                   delay: 500.ms,
                   child: Container(
                     width: 50,
@@ -251,7 +251,7 @@ class _QuickActions extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Actor(
-          acts: [.fadeIn(), .slideY(from: 0.3)],
+          acts: [Act.fadeIn(), Act.slideY(from: 0.3)],
           delay: 200.ms,
           child: Text(
             'Quick Actions',
@@ -271,8 +271,8 @@ class _QuickActions extends StatelessWidget {
               return Expanded(
                 child: Actor(
                   acts: [
-                    .fadeIn(),
-                    .slideX(from: index.isEven ? -0.3 : 0.3),
+                    Act.fadeIn(),
+                    Act.slideX(from: index.isEven ? -0.3 : 0.3),
                   ],
                   delay: Duration(milliseconds: 250 + (index * 50)),
                   child: Material(
@@ -339,7 +339,7 @@ class _Transactions extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Actor(
-          acts: [.fadeIn(), .slideY(from: 0.3)],
+          acts: [Act.fadeIn(), Act.slideY(from: 0.3)],
           delay: 300.ms,
           child: Row(
             children: [
@@ -367,8 +367,8 @@ class _Transactions extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 12),
             child: Actor(
               acts: [
-                .fadeIn(),
-                .slideX(from: index.isEven ? -0.3 : 0.3),
+                Act.fadeIn(),
+                Act.slideX(from: index.isEven ? -0.3 : 0.3),
               ],
               delay: Duration(milliseconds: 350 + (index * 80)),
               child: Material(

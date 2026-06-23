@@ -75,20 +75,20 @@ class _PageViewDemoState extends State<PageViewDemo> {
                 index: index,
                 controller: _controller,
                 acts: [
-                  .scale(from: .85),
-                  .slideY(to: -.05),
-                  .rotate3D(
+                  Act.scale(from: .85),
+                  Act.slideY(to: -.05),
+                  Act.rotate3D(
                     from: Rotation3D(y: 20),
                     to: Rotation3D.zero,
-                    reverse: .to(Rotation3D(y: -20)),
+                    reverse: ReverseBehavior.to(Rotation3D(y: -20)),
                     perspective: -.001,
                   ),
                 ],
                 child: Card(
                   color: colors.surfaceContainer,
-                  margin: const .symmetric(vertical: 32),
+                  margin: const EdgeInsets.symmetric(vertical: 32),
                   shape: RoundedRectangleBorder(
-                    borderRadius: .circular(20),
+                    borderRadius: BorderRadius.circular(20),
                     side: BorderSide(color: colors.onSurface.withValues(alpha: 0.1), width: .5),
                   ),
                   elevation: 8,
@@ -98,10 +98,10 @@ class _PageViewDemoState extends State<PageViewDemo> {
                     children: [
                       Expanded(
                         child: Container(
-                          clipBehavior: .hardEdge,
-                          width: .infinity,
+                          clipBehavior: Clip.hardEdge,
+                          width: double.infinity,
                           decoration: BoxDecoration(
-                            borderRadius: .circular(16),
+                            borderRadius: BorderRadius.circular(16),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.black.withValues(alpha: 0.1),
@@ -111,7 +111,7 @@ class _PageViewDemoState extends State<PageViewDemo> {
                             ],
                           ),
                           child: Actor(
-                            acts: [.parallax(slide: .2, axis: .vertical)],
+                            acts: [Act.parallax(slide: .2, axis: Axis.vertical)],
                             child: Image.network(
                               'https://picsum.photos/seed/${index + 100}/700/800',
                               fit: BoxFit.cover,
@@ -121,22 +121,22 @@ class _PageViewDemoState extends State<PageViewDemo> {
                       ),
                       Actor(
                         acts: [
-                          .clipHeight(alignment: .bottomCenter),
-                          .scale(from: .85),
-                          .fadeIn(from: .5),
+                          Act.clipHeight(alignment: Alignment.bottomCenter),
+                          Act.scale(from: .85),
+                          Act.fadeIn(from: .5),
                         ],
                         child: Padding(
                           padding: const EdgeInsets.only(top: 16),
                           child: SizedBox(
                             height: 50,
                             child: ListView.separated(
-                              scrollDirection: .horizontal,
+                              scrollDirection: Axis.horizontal,
                               itemCount: page.thumbnails.length,
-                              padding: .symmetric(horizontal: 16),
+                              padding: EdgeInsets.symmetric(horizontal: 16),
                               separatorBuilder: (context, index) => const SizedBox(width: 8.2),
                               itemBuilder: (context, thumbIndex) {
                                 return ClipRRect(
-                                  borderRadius: .circular(8),
+                                  borderRadius: BorderRadius.circular(8),
                                   child: SizedBox.square(
                                     dimension: 50,
                                     child: Image.network(
@@ -152,7 +152,7 @@ class _PageViewDemoState extends State<PageViewDemo> {
                       ),
                       const SizedBox(height: 16),
                       Padding(
-                        padding: .fromLTRB(16, 8, 16, 16),
+                        padding: EdgeInsets.fromLTRB(16, 8, 16, 16),
                         child: Column(
                           children: [
                             Row(
@@ -178,7 +178,7 @@ class _PageViewDemoState extends State<PageViewDemo> {
                             ),
                             const SizedBox(height: 12),
                             Actor(
-                              acts: [.fadeIn(), .slideUp()],
+                              acts: [Act.fadeIn(), Act.slideUp()],
                               child: IconTheme(
                                 data: IconThemeData(
                                   color: colors.primary,

@@ -90,7 +90,7 @@ Future<T?> showCueDialog<T>({
   bool barrierDismissible = true,
   String barrierLabel = 'CueDialog',
   Color barrierColor = const Color(0x80000000),
-  CueMotion motion = .defaultTime,
+  CueMotion motion = CueMotion.defaultTime,
   CueMotion? reverseMotion,
   bool useRootNavigator = true,
 }) {

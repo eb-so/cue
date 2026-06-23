@@ -187,7 +187,7 @@ void main() {
       final frames = MotionKeyframes<double>([
         Keyframe.key(0.0),
         Keyframe.key(1.0),
-      ], motion: .none);
+      ], motion: CueMotion.none);
       final actor = TweenActor<double>.keyframed(
         frames: frames,
         builder: (context, animation) => Container(),

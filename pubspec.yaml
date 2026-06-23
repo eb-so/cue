@@ -10,12 +10,15 @@ topics:
   - effects
 
 environment:
-  sdk: ^3.10.8
+  sdk: ">=3.9.2 <4.0.0"
   flutter: ">=1.17.0"
 
 dependencies:
   flutter:
     sdk: flutter
+  gooey:
+    git:
+      url: https://github.com/eb-so/gooey.git
 
 dev_dependencies:
   flutter_test:

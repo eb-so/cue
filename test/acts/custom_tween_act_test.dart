@@ -225,7 +225,7 @@ void main() {
       final frames = Keyframes<double>([
         Keyframe(0.0),
         Keyframe(100.0),
-      ], motion: .linear(300.ms));
+      ], motion: CueMotion.linear(300.ms));
       final actor = TweenActor<double>.keyframed(
         frames: frames,
         builder: (context, animation) => const SizedBox(),
@@ -237,7 +237,7 @@ void main() {
       final frames = Keyframes<double>([
         Keyframe(0.0),
         Keyframe(100.0),
-      ], motion: .linear(300.ms));
+      ], motion: CueMotion.linear(300.ms));
       const delay = Duration(milliseconds: 150);
       final actor = TweenActor<double>.keyframed(
         frames: frames,
@@ -251,7 +251,7 @@ void main() {
       final frames = Keyframes<double>([
         Keyframe(0.0),
         Keyframe(100.0),
-      ], motion: .linear(300.ms));
+      ], motion: CueMotion.linear(300.ms));
       final actor = TweenActor<double>.keyframed(
         frames: frames,
         builder: (context, animation) => const SizedBox(),

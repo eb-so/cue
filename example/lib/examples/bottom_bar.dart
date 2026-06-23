@@ -28,7 +28,7 @@ class _BottomBarState extends State<BottomBar> {
             child: Container(
               height: 56,
               width: 300,
-              decoration: BoxDecoration(borderRadius: .circular(32), color: Colors.black),
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(32), color: Colors.black),
               padding: const EdgeInsets.all(4),
               child: LayoutBuilder(
                 builder: (context, constraints) {
@@ -43,8 +43,8 @@ class _BottomBarState extends State<BottomBar> {
                         // still the animation will trigger only when the value changes,
                         //it will animate from the current position ignoring any provided 'from' value
                         fromCurrentValue: true,
-                        motion: .easeInOut(300.ms),
-                        acts: [.slideX(to: slideStep * _activeTab)],
+                        motion: CueMotion.easeInOut(300.ms),
+                        acts: [Act.slideX(to: slideStep * _activeTab)],
                         child: Container(
                           width: expandedWidth,
                           height: 48,
@@ -59,11 +59,11 @@ class _BottomBarState extends State<BottomBar> {
                         // 2 tabs switching midway would cause an overflow by a few pixels
                         maxWidth: constraints.maxWidth + 10,
                         child: Row(
-                          crossAxisAlignment: .stretch,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             for (int i = 0; i < _tabs.length; i++)
                               InkWell(
-                                borderRadius: .circular(32),
+                                borderRadius: BorderRadius.circular(32),
                                 onTap: () {
                                   setState(() {
                                     _activeTab = i;
@@ -71,29 +71,29 @@ class _BottomBarState extends State<BottomBar> {
                                 },
                                 child: Cue.onToggle(
                                   toggled: _activeTab == i,
-                                  motion: .smooth(),
+                                  motion: CueMotion.smooth(),
                                   child: Actor(
                                     acts: [
-                                      .sizedClip(from: .width(collapsedWidth), to: .width(expandedWidth)),
-                                      .colorTint(from: Colors.white60, to: Colors.black),
+                                      Act.sizedClip(from: NSize.width(collapsedWidth), to: NSize.width(expandedWidth)),
+                                      Act.colorTint(from: Colors.white60, to: Colors.black),
                                     ],
                                     child: Row(
-                                      mainAxisAlignment: .center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Icon(_tabs[i].icon, color: Colors.white),
                                         Actor(
                                           acts: [
                                             // clip the text so the icon is centered in the collapsed state
-                                            .clipWidth(),
-                                            .fadeIn(),
-                                            .scale(from: .7),
+                                            Act.clipWidth(),
+                                            Act.fadeIn(),
+                                            Act.scale(from: .7),
                                           ],
                                           child: Padding(
-                                            padding: const .symmetric(horizontal: 8.0),
+                                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
                                             child: Text(
                                               _tabs[i].label,
                                               maxLines: 1,
-                                              overflow: .fade,
+                                              overflow: TextOverflow.fade,
                                             ),
                                           ),
                                         ),

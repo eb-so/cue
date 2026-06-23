@@ -33,19 +33,19 @@ class _IndicatorToButtonState extends State<IndicatorToButton> {
                 controller: _cuePageController,
                 child: Actor(
                   acts: [
-                    .rotate(
+                    Act.rotate(
                       from: 4.5,
-                      alignment: .bottomCenter,
-                      reverse: .to(-4.5),
+                      alignment: Alignment.bottomCenter,
+                      reverse: ReverseBehavior.to(-4.5),
                     ),
                   ],
                   child: Card(
                     margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
                     elevation: .2,
-                    clipBehavior: .antiAlias,
-                    shape: RoundedSuperellipseBorder(borderRadius: .circular(32)),
+                    clipBehavior: Clip.antiAlias,
+                    shape: RoundedSuperellipseBorder(borderRadius: BorderRadius.circular(32)),
                     child: Actor(
-                      acts: [.parallax(slide: .3, axis: .horizontal)],
+                      acts: [Act.parallax(slide: .3, axis: Axis.horizontal)],
                       child: Image.network(
                         'https://picsum.photos/600/500?random=$index',
                         fit: BoxFit.cover,
@@ -79,18 +79,18 @@ class _IndicatorToButtonState extends State<IndicatorToButton> {
                           ),
                           child: Actor(
                             acts: [
-                              .sizedClip(
-                                from: .square(10),
-                                to: isLast ? .height(44) : NSize(w: 38, h: 10),
+                              Act.sizedClip(
+                                from: NSize.square(10),
+                                to: isLast ? NSize.height(44) : NSize(w: 38, h: 10),
                               ),
-                              if (isLast) .zoomIn(),
-                              if (isLast) .slideX(from: -1),
+                              if (isLast) Act.zoomIn(),
+                              if (isLast) Act.slideX(from: -1),
                             ],
                             child: isLast
                                 ? Padding(
-                                    padding: const .symmetric(horizontal: 16),
+                                    padding: const EdgeInsets.symmetric(horizontal: 16),
                                     child: Row(
-                                      mainAxisAlignment: .center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Text(
                                           'Let’s Go',

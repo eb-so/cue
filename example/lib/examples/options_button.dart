@@ -28,54 +28,54 @@ class OptionsButton extends StatelessWidget {
       },
       builder: (context, rect) {
         return Padding(
-          padding: const .all(2.0),
+          padding: const EdgeInsets.all(2.0),
           child: FractionallySizedBox(
             widthFactor: .8,
             child: Center(
               child: Material(
                 color: theme.colorScheme.surfaceContainer,
                 shape: RoundedSuperellipseBorder(
-                  borderRadius: .circular(32),
+                  borderRadius: BorderRadius.circular(32),
                 ),
                 elevation: 1,
                 child: Actor(
-                  acts: [.sizedClip(from: .size(rect.size))],
+                  acts: [Act.sizedClip(from: NSize.size(rect.size))],
                   child: Column(
-                    mainAxisSize: .min,
-                    crossAxisAlignment: .start,
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Actor(
                         acts: [
-                          .translateFromGlobal(offset: rect.topLeft),
-                          .textStyle(
+                          Act.translateFromGlobal(offset: rect.topLeft),
+                          Act.textStyle(
                             from: labelStyle.copyWith(color: theme.primaryColor),
                             to: labelStyle.copyWith(fontSize: 22),
                           ),
                         ],
                         child: Padding(
-                          padding: .symmetric(horizontal: 24, vertical: 14),
+                          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 14),
                           child: Text('Options'),
                         ),
                       ),
                       Actor(
                         acts: [
-                          .focus(),
-                          .scale(from: .8),
-                          .fadeIn(),
-                          .slideUp(),
+                          Act.focus(),
+                          Act.scale(from: .8),
+                          Act.fadeIn(),
+                          Act.slideUp(),
                         ],
                         child: Padding(
-                          padding: const .fromLTRB(16, 0, 16, 16),
+                          padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                           child: Column(
                             children: [
                               for (var i = 0; i < 4; i++)
                                 Actor(
                                   acts: [
-                                    .translateY(from: 10 * (i + 1)),
-                                    .scale(from: i * -.1),
+                                    Act.translateY(from: 10 * (i + 1)),
+                                    Act.scale(from: i * -.1),
                                   ],
                                   child: Card(
-                                    clipBehavior: .hardEdge,
+                                    clipBehavior: Clip.hardEdge,
                                     elevation: 0,
                                     child: ListTile(
                                       onTap: () => Navigator.of(context).pop(),

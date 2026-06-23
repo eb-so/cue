@@ -30,7 +30,7 @@ class _HorizontallyExpandingCardsState extends State<HorizontallyExpandingCards>
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Padding(
-      padding: .symmetric(horizontal: 16),
+      padding: EdgeInsets.symmetric(horizontal: 16),
       child: SizedBox(
         height: 200,
         child: LayoutBuilder(
@@ -39,30 +39,30 @@ class _HorizontallyExpandingCardsState extends State<HorizontallyExpandingCards>
             final availableWidth = constraints.maxWidth - (spacing * 2);
             return Row(
               spacing: spacing,
-              mainAxisAlignment: .center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 for (var i = 0; i < cardsInfo.length; i++)
                   Cue.onToggle(
                     toggled: i == _expandedIndex,
-                    motion: .smooth(),
+                    motion: CueMotion.smooth(),
                     child: Card(
-                      margin: .zero,
+                      margin: EdgeInsets.zero,
                       elevation: 0,
-                      shape: RoundedSuperellipseBorder(borderRadius: .circular(20)),
-                      clipBehavior: .antiAlias,
+                      shape: RoundedSuperellipseBorder(borderRadius: BorderRadius.circular(20)),
+                      clipBehavior: Clip.antiAlias,
                       child: Actor(
                         acts: [
-                          .sizedClip(
-                            from: .width(availableWidth * 0.16),
-                            to: .width(availableWidth * 0.6),
+                          Act.sizedClip(
+                            from: NSize.width(availableWidth * 0.16),
+                            to: NSize.width(availableWidth * 0.6),
                           ),
                         ],
                         child: DecoratedBox(
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                              colorFilter: ColorFilter.mode(Colors.black.withValues(alpha: .3), .color),
+                              colorFilter: ColorFilter.mode(Colors.black.withValues(alpha: .3), BlendMode.color),
                               image: NetworkImage(cardsInfo[i].imageUrl),
-                              fit: .cover,
+                              fit: BoxFit.cover,
                               opacity: .8,
                             ),
                           ),
@@ -75,21 +75,21 @@ class _HorizontallyExpandingCardsState extends State<HorizontallyExpandingCards>
                               _expandedIndex = i;
                             }),
                             child: Padding(
-                              padding: .fromLTRB(14, 14, 14, 0),
+                              padding: EdgeInsets.fromLTRB(14, 14, 14, 0),
                               child: Column(
-                                mainAxisAlignment: .end,
-                                crossAxisAlignment: .start,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Actor(
                                     acts: [
-                                      .align(from: .bottomCenter, to: .bottomLeft),
-                                      .rotateLayout(from: -1, unit: .quarterTurns),
+                                      Act.align(from: Alignment.bottomCenter, to: Alignment.bottomLeft),
+                                      Act.rotateLayout(from: -1, unit: RotateUnit.quarterTurns),
                                     ],
                                     child: Text(
                                       cardsInfo[i].title,
                                       style: textTheme.titleMedium?.copyWith(
                                         color: Colors.white,
-                                        fontWeight: .bold,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                   ),
@@ -97,16 +97,16 @@ class _HorizontallyExpandingCardsState extends State<HorizontallyExpandingCards>
                                   Flexible(
                                     child: Actor(
                                       acts: [
-                                        .fadeIn(),
-                                        .clipHeight(fromFactor: .25),
+                                        Act.fadeIn(),
+                                        Act.clipHeight(fromFactor: .25),
                                       ],
                                       child: Padding(
-                                        padding: .only(bottom: 14),
+                                        padding: EdgeInsets.only(bottom: 14),
                                         child: Text(
                                           'This is a bunch of text that should only be visible when the card is expanded.',
                                           style: textTheme.bodySmall?.copyWith(
                                             color: Colors.white,
-                                            fontWeight: .w600,
+                                            fontWeight: FontWeight.w600,
                                           ),
                                         ),
                                       ),

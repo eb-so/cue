@@ -20,7 +20,7 @@ class _SmoothSwitchState extends State<SmoothSwitch> {
     const duration = Duration(milliseconds: 300);
     return Cue.onToggle(
       toggled: _toggled,
-      motion: .linear(duration),
+      motion: CueMotion.linear(duration),
       child: GestureDetector(
         onTap: () {
           setState(() {
@@ -30,10 +30,10 @@ class _SmoothSwitchState extends State<SmoothSwitch> {
         child: Actor(
           acts: [
             ScaleAct.keyframed(
-              frames: .fractional([
-                .key(1.1, at: .4),
-                .key(1.1, at: .6),
-                .key(1.0, at: 1.0),
+              frames: Keyframes.fractional([
+                FKeyframe.key(1.1, at: .4),
+                FKeyframe.key(1.1, at: .6),
+                FKeyframe.key(1.0, at: 1.0),
               ]),
             ),
           ],
@@ -42,7 +42,7 @@ class _SmoothSwitchState extends State<SmoothSwitch> {
             height: height,
             decoration: BoxDecoration(
               color: trackColor,
-              borderRadius: .circular(32),
+              borderRadius: BorderRadius.circular(32),
               boxShadow: [
                 BoxShadow(
                   color: theme.colorScheme.shadow.withValues(alpha: .1),
@@ -52,20 +52,20 @@ class _SmoothSwitchState extends State<SmoothSwitch> {
               ],
             ),
             child: Stack(
-              fit: .expand,
+              fit: StackFit.expand,
               children: [
                 PositionedActor.keyframed(
-                  frames: .fractional([
-                    .key(Position.fill(end: .5), at: .0),
-                    .key(Position.fill(end: 0, top: .15, bottom: .15), at: .45),
-                    .key(Position.fill(end: 0, top: .15, bottom: .15), at: .55),
-                    .key(Position.fill(start: .5), at: 1.0),
+                  frames: Keyframes.fractional([
+                    FKeyframe.key(Position.fill(end: .5), at: .0),
+                    FKeyframe.key(Position.fill(end: 0, top: .15, bottom: .15), at: .45),
+                    FKeyframe.key(Position.fill(end: 0, top: .15, bottom: .15), at: .55),
+                    FKeyframe.key(Position.fill(start: .5), at: 1.0),
                   ]),
                   relativeTo: Size(width, height),
                   child: DecoratedBox(
                     decoration: BoxDecoration(
                       color: thumbColor,
-                      borderRadius: .circular(32),
+                      borderRadius: BorderRadius.circular(32),
                     ),
                   ),
                 ),
@@ -73,19 +73,22 @@ class _SmoothSwitchState extends State<SmoothSwitch> {
                   children: [
                     Expanded(
                       child: DecoratedBoxActor(
-                        shape: .circle,
-                        color: .tween(trackColor, thumbColor),
-                        motion: .linear(duration * .5),
-                        reverse: .mirror(delay: duration * .5),
+                        shape: BoxShape.circle,
+                        color: AnimatableValue.tween(trackColor, thumbColor),
+                        motion: CueMotion.linear(duration * .5),
+                        reverse: ReverseBehavior.mirror(delay: duration * .5),
                         child: SizedBox.square(dimension: width * .16),
                       ),
                     ),
                     Expanded(
                       child: Center(
                         child: DecoratedBoxActor(
-                          color: .tween(thumbColor, trackColor),
-                          borderRadius: .tween(.circular(width * .2), .circular(width * .2)),
-                          motion: .linear(duration * .5),
+                          color: AnimatableValue.tween(thumbColor, trackColor),
+                          borderRadius: AnimatableValue.tween(
+                            BorderRadius.circular(width * .2),
+                            BorderRadius.circular(width * .2),
+                          ),
+                          motion: CueMotion.linear(duration * .5),
                           delay: duration * .5,
                           child: SizedBox(width: width * .08, height: width * .22),
                         ),

@@ -114,26 +114,26 @@ class _ParallaxCard extends StatelessWidget {
       acts: [
         // uncomment to add a subtle 3D rotation effect to the parallax card
         Rotate3DAct.keyframed(
-          frames: .fractional([
-            .key(Rotation3D(x: 60, y: 20, z: 0), at: 0.0),
-            .key(Rotation3D.zero, at: 0.5),
-            .key(Rotation3D(x: -60, y: -20, z: -0), at: 1.0),
+          frames: Keyframes.fractional([
+            FKeyframe.key(Rotation3D(x: 60, y: 20, z: 0), at: 0.0),
+            FKeyframe.key(Rotation3D.zero, at: 0.5),
+            FKeyframe.key(Rotation3D(x: -60, y: -20, z: -0), at: 1.0),
           ]),
         ),
       ],
       child: Container(
         height: 280,
-        margin: .symmetric(vertical: 8),
-        decoration: BoxDecoration(borderRadius: .circular(24)),
-        clipBehavior: .hardEdge,
+        margin: EdgeInsets.symmetric(vertical: 8),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(24)),
+        clipBehavior: Clip.hardEdge,
         child: Stack(
-          fit: .expand,
+          fit: StackFit.expand,
           children: [
             Container(
               foregroundDecoration: BoxDecoration(
                 gradient: LinearGradient(
-                  begin: .topCenter,
-                  end: .bottomCenter,
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
                   colors: [
                     Colors.transparent,
                     Colors.black.withValues(alpha: 0.7),
@@ -142,7 +142,7 @@ class _ParallaxCard extends StatelessWidget {
                 ),
               ),
               child: Actor(
-                acts: [.parallax(slide: -.4, axis: .vertical)],
+                acts: [Act.parallax(slide: -.4, axis: Axis.vertical)],
                 child: Image.network(
                   'https://picsum.photos/id/$imageId/600/600',
                   fit: BoxFit.cover,
@@ -154,7 +154,7 @@ class _ParallaxCard extends StatelessWidget {
               right: 20,
               bottom: 20,
               child: Column(
-                crossAxisAlignment: .start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [

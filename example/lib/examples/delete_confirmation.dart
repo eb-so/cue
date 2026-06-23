@@ -23,25 +23,25 @@ class DeleteConfirmationDialog extends StatelessWidget {
       ),
       builder: (context, rect) {
         return Actor(
-          acts: [.translate(to: Offset(-28, -28))],
+          acts: [Act.translate(to: Offset(-28, -28))],
           child: Material(
-            clipBehavior: .hardEdge,
+            clipBehavior: Clip.hardEdge,
             borderRadius: BorderRadius.circular(32),
             color: theme.colorScheme.surfaceContainer,
             elevation: 2,
             shadowColor: Colors.black.withValues(alpha: .3),
             child: Actor(
               acts: [
-                .sizedClip(
-                  from: .size(rect.size),
-                  to: .width(220),
-                  alignment: .bottomRight,
+                Act.sizedClip(
+                  from: NSize.size(rect.size),
+                  to: NSize.width(220),
+                  alignment: Alignment.bottomRight,
                 ),
-                .slideY(from: 0.4),
+                Act.slideY(from: 0.4),
               ],
               child: Column(
-                mainAxisSize: .min,
-                crossAxisAlignment: .end,
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -49,9 +49,9 @@ class DeleteConfirmationDialog extends StatelessWidget {
                     children: [
                       Actor(
                         acts: [
-                          .fadeIn(),
-                          .scale(from: .5),
-                          .blur(from: 10),
+                          Act.fadeIn(),
+                          Act.scale(from: .5),
+                          Act.blur(from: 10),
                         ],
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
@@ -59,13 +59,13 @@ class DeleteConfirmationDialog extends StatelessWidget {
                             children: [
                               Text(
                                 'Are you sure you want to delete this item?',
-                                textAlign: .center,
+                                textAlign: TextAlign.center,
                                 style: theme.textTheme.bodyMedium,
                               ),
                               SizedBox(height: 4),
                               Text(
                                 'This action cannot be undone.',
-                                textAlign: .center,
+                                textAlign: TextAlign.center,
                                 style: theme.textTheme.bodyMedium?.copyWith(
                                   color: theme.colorScheme.onSurface.withValues(alpha: .5),
                                 ),
@@ -79,17 +79,17 @@ class DeleteConfirmationDialog extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: theme.colorScheme.error.withValues(alpha: .05),
                           foregroundColor: theme.colorScheme.error,
-                          padding: .symmetric(horizontal: 20.0, vertical: 12.0),
+                          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(24),
                           ),
                         ),
                         label: Text('Delete Item'),
-                        iconAlignment: .end,
+                        iconAlignment: IconAlignment.end,
                         icon: Actor(
                           acts: [
-                            .translateFromGlobalRect(rect),
-                            .iconTheme(
+                            Act.translateFromGlobalRect(rect),
+                            Act.iconTheme(
                               from: IconThemeData(size: 24),
                               to: IconThemeData(size: 20),
                             ),

@@ -111,7 +111,7 @@ void main() {
                   SizedBox(
                     height: 100,
                     child: Cue.onScrollVisible(
-                      acts: [.fadeIn()],
+                      acts: [Act.fadeIn()],
                       child: const Text('Test'),
                     ),
                   ),

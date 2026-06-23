@@ -142,7 +142,7 @@ void main() {
       final frames = MotionKeyframes<Decoration>([
         Keyframe.key(BoxDecoration(color: Color(0xFF000000))),
         Keyframe.key(BoxDecoration(color: Color(0xFFFFFFFF))),
-      ], motion: .none);
+      ], motion: CueMotion.none);
       final act = DecoratedBoxAct.keyframed(frames: frames);
       expect(act.frames, equals(frames));
       expect(act.color, isNull);

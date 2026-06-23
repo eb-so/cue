@@ -33,18 +33,18 @@ class AirPlanePathDemo extends StatelessWidget {
                       );
                     final metrics = path.shift(Offset(12, 12)).computeMetrics().first;
                     return Row(
-                      mainAxisAlignment: .spaceBetween,
-                      crossAxisAlignment: .end,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Stack(
-                          alignment: .center,
+                          alignment: Alignment.center,
                           children: [
                             Icon(Icons.circle, size: 16, color: Colors.white),
                             Actor(
                               acts: [
                                 // paint the path
                                 PaintAct(
-                                  painter: .paint((canvas, size, progress) {
+                                  painter: Painter.paint((canvas, size, progress) {
                                     final extractPath = metrics.extractPath(0, metrics.length * progress);
                                     canvas.drawPath(extractPath, paint);
                                   }),

@@ -22,10 +22,10 @@ class _DraggablePanelState extends State<DraggablePanel> {
           _isDraggedDown = forward;
         });
       },
-      motion: .easeInOut(400.ms),
+      motion: CueMotion.easeInOut(400.ms),
       child: CardTheme(
         data: theme.cardTheme.copyWith(
-          shape: RoundedRectangleBorder(borderRadius: .circular(24)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
           color: theme.colorScheme.surfaceContainerHigh,
         ),
         child: Stack(
@@ -38,14 +38,14 @@ class _DraggablePanelState extends State<DraggablePanel> {
               right: 24,
               height: _dragExtent - 32,
               child: Row(
-                crossAxisAlignment: .stretch,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 spacing: 8,
                 children: [
                   Expanded(
                     child: Actor(
                       acts: [
-                        .scale(from: 1.1),
-                        .slideY(from: .3),
+                        Act.scale(from: 1.1),
+                        Act.slideY(from: .3),
                       ],
                       child: Card(
                         child: Padding(
@@ -58,8 +58,8 @@ class _DraggablePanelState extends State<DraggablePanel> {
                   Expanded(
                     child: Actor(
                       acts: [
-                        .scale(from: 1.1),
-                        .slideY(from: .3),
+                        Act.scale(from: 1.1),
+                        Act.slideY(from: .3),
                       ],
                       child: Card(
                         child: Padding(
@@ -74,15 +74,15 @@ class _DraggablePanelState extends State<DraggablePanel> {
             ),
 
             PositionedActor(
-              from: .fill(),
-              to: .fromSTEB(20, _dragExtent, 20, 24),
+              from: Position.fill(),
+              to: Position.fromSTEB(20, _dragExtent, 20, 24),
               child: CueDragScrubber(
                 distance: _dragExtent,
-                scrubForwardDirection: .down,
+                scrubForwardDirection: CueScrubAxis.down,
                 child: CardActor(
-                  clipBehavior: .antiAlias,
-                  elevation: .fixed(.3),
-                  borderRadius: .tween(
+                  clipBehavior: Clip.antiAlias,
+                  elevation: AnimatableValue.fixed(.3),
+                  borderRadius: AnimatableValue.tween(
                     BorderRadius.circular(24),
                     BorderRadius.circular(48),
                   ),
@@ -90,7 +90,7 @@ class _DraggablePanelState extends State<DraggablePanel> {
                     fit: StackFit.expand,
                     children: [
                       Actor(
-                        acts: [.parallax(slide: .2, axis: .horizontal)],
+                        acts: [Act.parallax(slide: .2, axis: Axis.horizontal)],
                         child: Image.network(
                           'https://cdn.pixabay.com/photo/2024/10/06/11/55/cow-9099854_1280.jpg',
                           fit: BoxFit.cover,
@@ -102,14 +102,14 @@ class _DraggablePanelState extends State<DraggablePanel> {
                           padding: const EdgeInsets.all(24),
                           child: Actor(
                             acts: [
-                              .slideUp(),
-                              .focus(),
-                              .fadeIn(),
-                              .scale(from: 1.3),
-                              .clipHeight(),
+                              Act.slideUp(),
+                              Act.focus(),
+                              Act.fadeIn(),
+                              Act.scale(from: 1.3),
+                              Act.clipHeight(),
                             ],
                             child: Column(
-                              crossAxisAlignment: .start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text(

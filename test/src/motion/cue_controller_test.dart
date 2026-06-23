@@ -730,7 +730,7 @@ void main() {
         final frames = Keyframes<double>([
           Keyframe<double>(0.0),
           Keyframe<double>(100.0),
-        ], motion: .linear(100.ms));
+        ], motion: CueMotion.linear(100.ms));
 
         final animation = controller.keyframedTrack<double>(frames: frames);
 
@@ -744,7 +744,7 @@ void main() {
         final frames = Keyframes<double>([
           Keyframe<double>(0.0),
           Keyframe<double>(100.0),
-        ], motion: .linear(100.ms));
+        ], motion: CueMotion.linear(100.ms));
 
         final animation = controller.keyframedTrack<double>(frames: frames);
 

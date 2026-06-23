@@ -9,8 +9,8 @@ class ThreeDotsAction extends StatelessWidget {
     final colors = Theme.of(context).colorScheme;
     return CueModalTransition(
       barrierColor: Colors.black12,
-      motion: .bouncy(),
-      reverseMotion: .snappy(),
+      motion: CueMotion.bouncy(),
+      reverseMotion: CueMotion.snappy(),
       alignment: Alignment.bottomCenter,
       triggerBuilder: (context, showModal) => FloatingActionButton(
         shape: CircleBorder(),
@@ -34,7 +34,7 @@ class ThreeDotsAction extends StatelessWidget {
         return SizedBox(
           width: rect.width,
           child: Stack(
-            alignment: .bottomCenter,
+            alignment: Alignment.bottomCenter,
             fit: StackFit.loose,
             children: [
               FloatingActionButton(
@@ -43,22 +43,22 @@ class ThreeDotsAction extends StatelessWidget {
                 onPressed: () => Navigator.of(context).pop(),
                 child: Actor(
                   acts: [
-                    .fadeIn(from: 0),
-                    .focus(from: 8),
-                    .slideY(from: 1),
+                    Act.fadeIn(from: 0),
+                    Act.focus(from: 8),
+                    Act.slideY(from: 1),
                   ],
                   child: const Icon(Icons.keyboard_arrow_down),
                 ),
               ),
               Actor(
                 acts: [
-                  .translateY(
+                  Act.translateY(
                     from: -rect.height / 3,
                     to: -rect.height - 4, // 4 is little extra padding
                   ),
                 ],
                 child: Column(
-                  mainAxisSize: .min,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     for (var icon in [
                       Icons.near_me_outlined,
@@ -67,10 +67,10 @@ class ThreeDotsAction extends StatelessWidget {
                     ])
                       Actor(
                         acts: [
-                          .padding(from: .all(1), to: .only(bottom: 10.0)),
-                          .sizedBox(
-                            width: .tween(5, 44),
-                            height: .tween(5, 44),
+                          Act.padding(from: EdgeInsets.all(1), to: EdgeInsets.only(bottom: 10.0)),
+                          Act.sizedBox(
+                            width: AnimatableValue.tween(5, 44),
+                            height: AnimatableValue.tween(5, 44),
                           ),
                         ],
                         child: FloatingActionButton(
@@ -82,9 +82,9 @@ class ThreeDotsAction extends StatelessWidget {
                           onPressed: () {},
                           child: Actor(
                             acts: [
-                              .focus(from: 8),
-                              .zoomIn(),
-                              .fadeIn(),
+                              Act.focus(from: 8),
+                              Act.zoomIn(),
+                              Act.fadeIn(),
                             ],
                             child: Icon(icon, color: colors.onPrimary, size: 20),
                           ),

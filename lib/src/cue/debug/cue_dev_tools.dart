@@ -229,7 +229,7 @@ class _DebugOverlayState extends State<_DebugOverlay> {
               child: Align(
                 alignment: _data.alignment,
                 child: SafeArea(
-                  minimum: .only(top: 16),
+                  minimum: EdgeInsets.only(top: 16),
                   child: IconTheme(
                     data: theme.iconTheme.copyWith(color: theme.colorScheme.primary, size: 20),
                     child: Padding(
@@ -257,9 +257,9 @@ class _DebugOverlayState extends State<_DebugOverlay> {
                                 if (_data.isMinimized) {
                                   return IconButton(
                                     style: IconButton.styleFrom(
-                                      tapTargetSize: .shrinkWrap,
+                                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                       shape: CircleBorder(),
-                                      minimumSize: .square(40),
+                                      minimumSize: Size.square(40),
                                     ),
                                     icon: Icon(Icons.play_circle),
                                     onPressed: _data.activeTargetId != null && _data.activeTargetId!.isNotEmpty
@@ -273,7 +273,7 @@ class _DebugOverlayState extends State<_DebugOverlay> {
                                 }
 
                                 return Padding(
-                                  padding: const .fromLTRB(8, 4, 8, 8),
+                                  padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -348,7 +348,9 @@ class _DebugOverlayState extends State<_DebugOverlay> {
                                           ),
 
                                           IconButton(
-                                            style: IconButton.styleFrom(tapTargetSize: .shrinkWrap),
+                                            style: IconButton.styleFrom(
+                                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                            ),
                                             onPressed: _toggleSlowMode,
                                             icon: Icon(
                                               Icons.alarm_rounded,
@@ -423,10 +425,10 @@ class _DebugOverlayState extends State<_DebugOverlay> {
                                         ],
                                       ),
                                       Container(
-                                        padding: const .fromLTRB(0, 12, 0, 4),
+                                        padding: const EdgeInsets.fromLTRB(0, 12, 0, 4),
                                         decoration: BoxDecoration(
                                           color: theme.colorScheme.surfaceContainer,
-                                          borderRadius: .circular(10),
+                                          borderRadius: BorderRadius.circular(10),
                                         ),
                                         child: SliderTheme(
                                           data: SliderThemeData(

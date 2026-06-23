@@ -980,7 +980,7 @@ void main() {
       });
 
       test('timeline with zero duration tracks', () {
-        final zeroMotion = CueMotion.linear(.zero);
+        final zeroMotion = CueMotion.linear(Duration.zero);
         final normalMotion = CueMotion.linear(300.ms);
 
         final zeroConfig = TrackConfig(motion: zeroMotion, reverseMotion: zeroMotion);

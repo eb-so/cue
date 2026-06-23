@@ -41,15 +41,15 @@ class _ExpandingCardsState extends State<ExpandingCards> {
 
                   return Actor(
                     acts: [
-                      .scale(from: 1.0, to: 1.05),
-                      .padding(to: const .symmetric(vertical: 12)),
+                      Act.scale(from: 1.0, to: 1.05),
+                      Act.padding(to: const EdgeInsets.symmetric(vertical: 12)),
                     ],
                     child: Material(
-                      clipBehavior: .hardEdge,
+                      clipBehavior: Clip.hardEdge,
                       color: theme.colorScheme.surfaceContainer,
-                      borderRadius: .vertical(
-                        top: .circular(fromTopRadius),
-                        bottom: .circular(fromBottomRadius),
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(fromTopRadius),
+                        bottom: Radius.circular(fromBottomRadius),
                       ),
                       child: InkWell(
                         onTap: () {
@@ -62,7 +62,7 @@ class _ExpandingCardsState extends State<ExpandingCards> {
                           });
                         },
                         child: Padding(
-                          padding: const .fromLTRB(20, 16, 16, 0),
+                          padding: const EdgeInsets.fromLTRB(20, 16, 16, 0),
                           child: Column(
                             spacing: 12,
                             children: [
@@ -72,7 +72,7 @@ class _ExpandingCardsState extends State<ExpandingCards> {
                                   SizedBox(width: 12),
                                   Expanded(child: Text(_cardIfno[i].$1)),
                                   Actor(
-                                    acts: [.rotate(to: -180)],
+                                    acts: [Act.rotate(to: -180)],
                                     child: Icon(
                                       Icons.expand_more_rounded,
                                       color: theme.colorScheme.onSurface.withValues(alpha: .6),
@@ -82,13 +82,13 @@ class _ExpandingCardsState extends State<ExpandingCards> {
                               ),
                               Actor(
                                 acts: [
-                                  .clipHeight(fromFactor: .3),
-                                  .fadeIn(),
-                                  .slideY(from: 0.5),
-                                  .blur(from: 8),
+                                  Act.clipHeight(fromFactor: .3),
+                                  Act.fadeIn(),
+                                  Act.slideY(from: 0.5),
+                                  Act.blur(from: 8),
                                 ],
                                 child: Padding(
-                                  padding: const .only(left: 8, right: 8, bottom: 12),
+                                  padding: const EdgeInsets.only(left: 8, right: 8, bottom: 12),
                                   child: Text(
                                     'Lorem ipsum dolor sit amet, consectetur for on adipiscing elit. Donec auctor, nisl eget ultricies lacinia.',
                                     style: theme.textTheme.bodySmall?.copyWith(

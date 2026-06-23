@@ -75,7 +75,7 @@ class CueFlexibleSpaceBar extends StatefulWidget {
 }
 
 class _CueFlexibleSpaceBarState extends State<CueFlexibleSpaceBar> with SingleTickerProviderStateMixin {
-  late final _controller = CueController(vsync: this, motion: .linear(500.ms));
+  late final _controller = CueController(vsync: this, motion: CueMotion.linear(500.ms));
 
   /// The scroll position this widget is currently listening to.
   ScrollPosition? _scrollPosition;

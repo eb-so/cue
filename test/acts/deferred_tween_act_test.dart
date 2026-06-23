@@ -11,7 +11,7 @@ void main() {
       final frames = MotionKeyframes<NSize>([
         Keyframe.key(NSize(w: 100, h: 100)),
         Keyframe.key(NSize(w: 200, h: 200)),
-      ], motion: .none);
+      ], motion: CueMotion.none);
 
       final act = SizedClipAct.keyframed(frames: frames);
       expect(act.key, equals(const ActKey('SizedClip')));
@@ -23,7 +23,7 @@ void main() {
     test('SizedClipAct equality with keyframed', () {
       final frames = MotionKeyframes<NSize>([
         Keyframe.key(NSize(w: 100, h: 100)),
-      ], motion: .none);
+      ], motion: CueMotion.none);
 
       final a = SizedClipAct.keyframed(frames: frames);
       final b = SizedClipAct.keyframed(frames: frames);
@@ -33,7 +33,7 @@ void main() {
     test('SizedClipAct keyframed vs default not equal', () {
       final frames = MotionKeyframes<NSize>([
         Keyframe.key(NSize(w: 100, h: 100)),
-      ], motion: .none);
+      ], motion: CueMotion.none);
 
       final a = SizedClipAct.keyframed(frames: frames);
       const b = SizedClipAct();
@@ -43,10 +43,10 @@ void main() {
     test('SizedClipAct with different frames not equal', () {
       final framesA = MotionKeyframes<NSize>([
         Keyframe.key(NSize(w: 100, h: 100)),
-      ], motion: .none);
+      ], motion: CueMotion.none);
       final framesB = MotionKeyframes<NSize>([
         Keyframe.key(NSize(w: 200, h: 200)),
-      ], motion: .none);
+      ], motion: CueMotion.none);
 
       final a = SizedClipAct.keyframed(frames: framesA);
       final b = SizedClipAct.keyframed(frames: framesB);
@@ -56,7 +56,7 @@ void main() {
     test('SizedClipAct with different delay not equal', () {
       final frames = MotionKeyframes<NSize>([
         Keyframe.key(NSize(w: 100, h: 100)),
-      ], motion: .none);
+      ], motion: CueMotion.none);
 
       final a = SizedClipAct.keyframed(frames: frames, delay: Duration(milliseconds: 100));
       final b = SizedClipAct.keyframed(frames: frames, delay: Duration(milliseconds: 200));

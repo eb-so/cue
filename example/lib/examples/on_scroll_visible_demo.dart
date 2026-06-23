@@ -16,19 +16,19 @@ class OnScrollVisibleExample extends StatelessWidget {
         elevation: 0,
       ),
       body: ListView.builder(
-        padding: .all(16),
+        padding: EdgeInsets.all(16),
         itemCount: 10,
         itemBuilder: (context, index) {
           return Padding(
-            padding: .symmetric(vertical: 8),
+            padding: EdgeInsets.symmetric(vertical: 8),
             child: Cue.onScrollVisible(
               key: ValueKey(index),
               acts: [
                 // forward from Offset(-.6, 0) to  Offset.zero
                 // reverse from Offset.zero to Offset(0, .8)
-                .slide(from: Offset(-.6, 0), reverse: .to(Offset(0, .8))),
-                .scale(from: 0.85),
-                .fadeIn(),
+                Act.slide(from: Offset(-.6, 0), reverse: ReverseBehavior.to(Offset(0, .8))),
+                Act.scale(from: 0.85),
+                Act.fadeIn(),
               ],
               child: _BigCard(index: index),
             ),

@@ -14,7 +14,7 @@ class IosContextMenu extends StatelessWidget {
       itemCount: 10,
       itemBuilder: (context, index) {
         final imageCard = Align(
-          alignment: .centerLeft,
+          alignment: Alignment.centerLeft,
           child: SizedBox(
             width: 320,
             height: 360,
@@ -36,11 +36,11 @@ class IosContextMenu extends StatelessWidget {
 
         return CueModalTransition(
           barrierColor: Colors.transparent,
-          motion: .smooth(),
-          reverseMotion: .snappy(),
+          motion: CueMotion.smooth(),
+          reverseMotion: CueMotion.snappy(),
           hideTriggerOnTransition: true,
           backdrop: Actor(
-            acts: [.backdropBlur(to: 8)],
+            acts: [Act.backdropBlur(to: 8)],
             child: ColoredBox(color: Colors.transparent),
           ),
           triggerBuilder: (context, open) {
@@ -53,21 +53,21 @@ class IosContextMenu extends StatelessWidget {
             return SafeArea(
               bottom: false,
               child: Padding(
-                padding: .only(top: kToolbarHeight),
+                padding: EdgeInsets.only(top: kToolbarHeight),
                 child: ClipRect(
                   child: Column(
                     verticalDirection: VerticalDirection.up,
-                    mainAxisAlignment: showInTopHalf ? .end : .start,
-                    crossAxisAlignment: .start,
+                    mainAxisAlignment: showInTopHalf ? MainAxisAlignment.end : MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: 40),
                       SizedBox(
                         width: 300,
                         child: Actor(
                           acts: [
-                            .fadeIn(delay: 100.ms),
-                            .zoomIn(reverse: .none()),
-                            .slide(from: Offset(0, -2)),
+                            Act.fadeIn(delay: 100.ms),
+                            Act.zoomIn(reverse: ReverseBehavior.none()),
+                            Act.slide(from: Offset(0, -2)),
                           ],
                           child: Card(
                             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
@@ -79,7 +79,7 @@ class IosContextMenu extends StatelessWidget {
                             child: Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
                               child: Column(
-                                mainAxisSize: .min,
+                                mainAxisSize: MainAxisSize.min,
                                 children: [
                                   _OptionTile(title: 'Attach Sticker', icon: Iconsax.sticker),
                                   Divider(thickness: .5, indent: 2),
@@ -94,14 +94,14 @@ class IosContextMenu extends StatelessWidget {
                       ),
                       SizedBox(height: 4),
                       Actor(
-                        acts: [.translateFromGlobal(offset: rect.topLeft - const Offset(0, 24 + 4))],
+                        acts: [Act.translateFromGlobal(offset: rect.topLeft - const Offset(0, 24 + 4))],
                         child: Column(
-                          crossAxisAlignment: .start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Actor(
                               acts: [
-                                .fadeIn(),
-                                .slideY(from: 2),
+                                Act.fadeIn(),
+                                Act.slideY(from: 2),
                               ],
                               child: Card(
                                 clipBehavior: Clip.antiAlias,
@@ -114,13 +114,13 @@ class IosContextMenu extends StatelessWidget {
                                 ),
                                 child: Actor(
                                   acts: [
-                                    .sizedClip(
-                                      from: .square(24),
-                                      to: .height(68),
+                                    Act.sizedClip(
+                                      from: NSize.square(24),
+                                      to: NSize.height(68),
                                       delay: 150.ms,
                                     ),
-                                    .fadeIn(),
-                                    .slideY(from: 2),
+                                    Act.fadeIn(),
+                                    Act.slideY(from: 2),
                                   ],
                                   child: ListView(
                                     scrollDirection: Axis.horizontal,
@@ -130,11 +130,11 @@ class IosContextMenu extends StatelessWidget {
                                         Center(
                                           child: Actor(
                                             delay: 200.ms,
-                                            motion: .wobbly(),
-                                            reverseMotion: .snappy(),
+                                            motion: CueMotion.wobbly(),
+                                            reverseMotion: CueMotion.snappy(),
                                             acts: [
-                                              .scale(from: .5),
-                                              .rotate(from: -50, delay: 10.ms * i),
+                                              Act.scale(from: .5),
+                                              Act.rotate(from: -50, delay: 10.ms * i),
                                             ],
                                             child: Padding(
                                               padding: const EdgeInsets.symmetric(horizontal: 10.0),

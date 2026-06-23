@@ -406,7 +406,7 @@ void main() {
       final frames = MotionKeyframes<int>([
         Keyframe(10),
         Keyframe(20),
-      ], motion: .linear(100.ms));
+      ], motion: CueMotion.linear(100.ms));
 
       final act = CueTweenBuildHelper<int>(
         from: 10,
@@ -427,7 +427,7 @@ void main() {
       final frames = MotionKeyframes<int>([
         Keyframe(10),
         Keyframe(20),
-      ], motion: .linear(100.ms));
+      ], motion: CueMotion.linear(100.ms));
 
       final act = CueTweenBuildHelper<int>(
         from: 10,
@@ -519,7 +519,7 @@ void main() {
         Keyframe(10),
         Keyframe(20),
         Keyframe(30),
-      ], motion: .linear(100.ms));
+      ], motion: CueMotion.linear(100.ms));
 
       final act = CueTweenBuildHelper<int>(
         from: 10,
@@ -540,7 +540,7 @@ void main() {
       final frames = MotionKeyframes<int>([
         Keyframe(10),
         Keyframe(20),
-      ], motion: .linear(100.ms));
+      ], motion: CueMotion.linear(100.ms));
 
       final act = CueTweenBuildHelper<int>(
         from: 5,

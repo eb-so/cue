@@ -112,13 +112,13 @@ void main() {
 
   group('MotionKeyframes and FractionalKeyframes equality', () {
     test('identical MotionKeyframes are equal', () {
-      final a = MotionKeyframes([Keyframe.key(1), Keyframe.key(2)], motion: .none);
-      final b = MotionKeyframes([Keyframe.key(1), Keyframe.key(2)], motion: .none);
+      final a = MotionKeyframes([Keyframe.key(1), Keyframe.key(2)], motion: CueMotion.none);
+      final b = MotionKeyframes([Keyframe.key(1), Keyframe.key(2)], motion: CueMotion.none);
       expect(a, equals(b));
     });
     test('different MotionKeyframes are not equal', () {
-      final a = MotionKeyframes([Keyframe.key(1)], motion: .none);
-      final b = MotionKeyframes([Keyframe.key(2)], motion: .none);
+      final a = MotionKeyframes([Keyframe.key(1)], motion: CueMotion.none);
+      final b = MotionKeyframes([Keyframe.key(2)], motion: CueMotion.none);
       expect(a, isNot(equals(b)));
     });
     test('identical FractionalKeyframes are equal', () {

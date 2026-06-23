@@ -48,7 +48,7 @@ class _ImageCard extends StatelessWidget {
         fit: StackFit.expand,
         children: [
           CueModalTransition(
-            motion: .easeInOut(300.ms),
+            motion: CueMotion.easeInOut(300.ms),
             hideTriggerOnTransition: true,
             barrierColor: Colors.black.withValues(alpha: .9),
             triggerBuilder: (context, open) => GestureDetector(
@@ -72,10 +72,10 @@ class _ImageCard extends StatelessWidget {
             bottom: 12,
             child: IgnorePointer(
               child: Container(
-                padding: const .symmetric(horizontal: 12, vertical: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 decoration: BoxDecoration(
                   color: Colors.black.withValues(alpha: 0.5),
-                  borderRadius: .circular(12),
+                  borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -120,19 +120,19 @@ class _ImageModalContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       fit: StackFit.expand,
-      alignment: .center,
+      alignment: Alignment.center,
       children: [
         SafeArea(
           bottom: false,
           child: Padding(
-            padding: .only(top: kToolbarHeight),
+            padding: EdgeInsets.only(top: kToolbarHeight),
             child: ClipRect(
               child: Transform.translate(
                 offset: Offset(0, -kToolbarHeight), // make up for the padding
                 child: Actor(
                   acts: [
-                    .translateFromGlobalRect(triggerRect),
-                    .sizedBox(width: .tween(triggerRect.width, .infinity)),
+                    Act.translateFromGlobalRect(triggerRect),
+                    Act.sizedBox(width: AnimatableValue.tween(triggerRect.width, double.infinity)),
                   ],
                   child: Center(
                     child: AspectRatio(
@@ -159,10 +159,10 @@ class _ImageModalContent extends StatelessWidget {
           child: SafeArea(
             child: Actor(
               delay: 100.ms,
-              reverseMotion: .spatialFast(),
+              reverseMotion: CueMotion.spatialFast(),
               acts: [
-                .fadeIn(),
-                .slideY(from: -0.2),
+                Act.fadeIn(),
+                Act.slideY(from: -0.2),
               ],
               child: Row(
                 children: [
@@ -199,8 +199,8 @@ class _ImageModalContent extends StatelessWidget {
           bottom: 50,
           child: Actor(
             acts: [
-              .slideY(from: 1),
-              .fadeIn(),
+              Act.slideY(from: 1),
+              Act.fadeIn(),
             ],
             delay: 200.ms,
             child: Container(
